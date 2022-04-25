@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 class doctring
 """
@@ -73,5 +74,3 @@ class Player:
                     self.power()
                 else:
                     self.position_one = [current_row][current_column]
-
- 
