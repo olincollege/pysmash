@@ -2,7 +2,7 @@ import pygame
 
 class Map:
     """
-    Map class which contains the necessary attributes for the different maps
+    Map class which contains the necessary attributes for the different mapsggit 
     """
     
     def __init__(self, img_path, platforms):
@@ -29,10 +29,12 @@ class Platform(pygame.sprite.Sprite):
 
 #creating Final Destination Map Object
 final_destination_image=""
-final_destination_platforms=[]
-final_destination=map(final_destination_image,final_destination_platforms)
+final_dest_plat_sprites=[]
+final_dest_plat_group=pygame.sprite.Group(final_dest_plat_sprites)
+final_destination=map(final_destination_image,final_dest_plat_group)
 
 #creating Battlefield Map Object
 battlefield_image=""
-battlefield_platforms=[]
-battlefield=map(final_destination_image,final_destination_platforms)
+battlefield_plat_sprites=[]
+battlefield_plat_group=pygame.sprite.Group(battlefield_plat_sprites)
+battlefield=map(final_destination_image, battlefield_plat_group)
