@@ -2,22 +2,21 @@
 class docstring
 """
 from abc import ABC, abstractmethod
+import pygame
 
 class CharaterView(ABC):
     """
     docstring
     """
-    def __init__(self, player, map):
-
-        self._player = player
-        self._map = map
+    def __init__(self, game):
+        self._game = game
     
     @property
-    def board(self):
+    def game(self):
         """
         docstring
         """
-        return self._player and self._map
+        return self._game
 
     @abstractmethod
     def draw(self):
@@ -25,17 +24,23 @@ class CharaterView(ABC):
         A method that is an abstract method that does nothing
         """
     
-class TextView(CharaterView):
+class WindowView(CharaterView):
     """
    dostring
     """
+    def __init__(self, game, x_dim, y_dim):
+        super().__init__(game)
+        self.screen = pygame.display.set_mode([x_dim, y_dim])
 
     def draw(self):
         """
         implement the 'draw' method, which should print the
         map and character
         """
-        print(self.player)
-        print(self.map)
+        self.game.all_sprites.update()
+        self.screen.fill((255, 255, 255))
+        self.game.all_sprites.draw(self.screen)
+        pygame.display.flip()
+
         
 

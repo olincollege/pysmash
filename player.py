@@ -1,25 +1,30 @@
 """
 class doctring
 """
-current_row = 0
-current_column = 0
-class Player:
+import abc
+import pygame
+
+class Player(pygame.sprite.Sprite):
     """
     Doctring
     """
-    def __init__(self, chosen_character, velocity_one, position_one, \
-    direction_one, attack_one, knockback_one, health_one):
-        self.player_1_character = chosen_character
-        self.velocity_one = velocity_one
-        self.position_one = position_one
-        self.direction_one = direction_one 
-        self.attack_one = attack_one
-        self.knockback_one = knockback_one
-        self.health_one = health_one
-        #self.image = mw1.png
+    def __init__(self, chosen_character, weight, \
+    direction, knockback, image_path):
+        super().__init__()
+        self.name = chosen_character
+        self.velocity = 0
+        self.accel = 0
+        self.x_pos = 0
+        self.y_pos = -420
+        self.direction = 'left'
+        self.knockback = knockback
+        self._health = 0
+        self.image = pygame.transform.scale(pygame.image.load(image_path), (100, 200))
         self.mover = 'stand'
-        self.weight = self.player_1_character.weight()
+        self.rect = self.image.get_rect()
+        self.weight = weight
         self.speed = 34 / self.weight
+        self.isjumping = False
 
     def knockback(self):
         health = 1000 / self.weight
@@ -30,22 +35,34 @@ class Player:
         pass
     def defense(self):
         pass
+    def crouch(self):
+        pass
+    def gravity(self):
+        self.rect.y += 3.3 * 3
+        self.rect.y = min(self.rect.y, 520)
+        self.y_pos = self.rect.y
+
+    @property
+    def health():
+        return self._health
+
+    def damage(self, amount):
+        self._health += amount
+
     def jump(self):
         """
         docstring
         """
-        self.mover = 'jump'
-        lift = 68 / self.weight
-        current_row += lift
-        self.postion_one = [current_row][current_column]
+        isjumping = True
+        
+
     def collide(self):
         pass
     def left(self):
         """
         docstring
         """
-        current_column -= self.speed
-        self.position_one = [current_row][current_column]
+        self.rect.x -= self.speed
         self.mover = 'walk'
         self.direction_one = 'left'
 
@@ -53,8 +70,8 @@ class Player:
         """
         docstring
         """
-        current_column += self.speed
-        self.position_one = [current_row][current_column]
+        self.x_pos += self.speed
+        self.rect.x += self.speed
         self.mover = 'walk'
         self.direction_one = 'right'
     def normal(self):
@@ -62,8 +79,6 @@ class Player:
         docstring
         """
         self.mover = 'normal'
-        self.direction_one = self.direction_one
-        self.position_one = [current_row][current_column]
     
     def character_image(self):
         """
