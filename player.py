@@ -1,7 +1,6 @@
 """
 class doctring
 """
-import abc
 import pygame
 
 vec = pygame.math.Vector2
@@ -12,12 +11,10 @@ class Player(pygame.sprite.Sprite):
     """
     Doctring
     """
-    def __init__(self, chosen_character, weight, \
-    direction, knockback, image_path):
+    def __init__(self, chosen_character, weight, image_path):
         super().__init__()
         self.name = chosen_character
         self.direction = 'left'
-        self.knockback = knockback
         self._health = 0
         self.image = pygame.transform.scale(pygame.image.load(image_path), (50, 100))
         self.mover = 'stand'
@@ -30,8 +27,14 @@ class Player(pygame.sprite.Sprite):
         self.acc = vec(0,0)
 
     def knockback(self):
-        health = 1000 / self.weight
+        """
+        Knock a character back based on knockback amount from an attack
+
+        Args:
+            strength (int): amount of knockback to apply to the character
+        """
         pass
+
     def attack(self):
         pass
     def power(self):
@@ -42,10 +45,13 @@ class Player(pygame.sprite.Sprite):
         pass
 
     def gravity(self):
+        """
+        Apply acceleration due to gravity to player object
+        """
         self.acc = vec(0,0.7)
 
     @property
-    def health():
+    def health(self):
         return self._health
 
     def damage(self, amount):
@@ -53,27 +59,31 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         """
-        docstring
+        Make the character jump
         """
         self.vel.y -= 20
 
     def left(self):
         """
-        docstring
+        Move the character left
         """
         self.acc.x = -ACC
         self.mover = 'walk'
-        self.direction_one = 'left'
+        self.direction = 'left'
 
     def right(self):
         """
-        docstring
+        Move the character right
         """
         self.acc.x = ACC
         self.mover = 'walk'
-        self.direction_one = 'right'
+        self.direction = 'right'
 
     def move(self):
+        """
+        Take the current acceleration and velocity, calculate player's position,
+        and update the player's rectangle
+        """
         self.acc.x += self.vel.x * FRIC
         self.vel += self.acc
         self.pos += self.vel + .5 * self.acc
@@ -89,7 +99,7 @@ class Player(pygame.sprite.Sprite):
         docstring
         """
         self.mover = 'normal'
-    
+
     def character_image(self):
         """
         docstring
@@ -122,11 +132,3 @@ class Player(pygame.sprite.Sprite):
             elif self.direction_one == 'left':
                 #self.image = mw2.png
                 print('attack left')
-        elif self.mover == 'defense':
-            if self.direction_one == 'right':
-                #self.image = mw2.png
-                print('defense right')
-            elif self.direction_one == 'left':
-                #self.image = mw2.png
-                print('defense left')
-        

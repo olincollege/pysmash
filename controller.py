@@ -1,8 +1,8 @@
 """
 Contains Controller Classes for PySmash
 """
-import pygame
 from abc import ABC, abstractmethod
+import pygame
 
 class Controller(ABC):
     """
@@ -58,13 +58,9 @@ class KeyboardController(Controller):
         # Keys that must be repressed
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                # If pressed key is ESC quit program
-                if event.key == pygame.K_ESCAPE:
-                    self._print("ESC was pressed. quitting...")
-                    self.quit()
-                elif event.key == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN:
                     self.player.crouch()
-                elif event.key == pygame.K_UP or event.key == pygame.K_SPACE:
+                elif event.key in [pygame.K_UP, pygame.K_SPACE]:
                     self.player.jump()
                 else:
                     self.player.normal()

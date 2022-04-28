@@ -3,9 +3,13 @@ Class for Mario
 """
 import sys
 sys.path.append('..')
+
 from player import Player
 
 class Mario(Player):
+    """
+    Class for Mario character
+    """
     def __init__(self):
         """
         Creates Player object with Mario's attributes

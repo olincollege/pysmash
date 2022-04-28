@@ -16,7 +16,7 @@ class CharaterView(ABC):
             game (Game): game to view
         """
         self._game = game
-    
+
     @property
     def game(self):
         """
@@ -30,7 +30,7 @@ class CharaterView(ABC):
         A method that is an abstract method that does nothing
         """
         pass
-    
+
 class WindowView(CharaterView):
     """
     Class that draws the viewer to a PyGame window
@@ -56,6 +56,3 @@ class WindowView(CharaterView):
         self.screen.fill((255, 255, 255))
         self.game.all_sprites.draw(self.screen)
         pygame.display.flip()
-
-        
-
