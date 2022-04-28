@@ -1,24 +1,25 @@
+"""
+Contains Controller Classes for PySmash
+"""
 import pygame
 from abc import ABC, abstractmethod
 
 class Controller(ABC):
+    """
+    Abstract class to define a character controller
+    """
     def __init__(self, player):
         """
-        Creates a private instance attribute of a tic tac toe
-        board.
+        Creates a private instance attribute of a Smash player
 
-        Args: board is an instance of a `TicTacToeBoard`
+        Args: player is an instance of Player
         """
         self._player = player
 
     @property
     def player(self):
         """
-        A 'board' property that returns the tic-tac-toe
-        board stored in the `TicTacToeView` instance.
-
-        Returns: self._board which is a private
-            instance of the game board.
+        player property that returns the Player object the controller controls
         """
         return self._player
 
@@ -32,10 +33,15 @@ class Controller(ABC):
 
 class KeyboardController(Controller):
     """
+    Controller that allows keyboard control of character
     """
     def move(self):
-        self.player.reset_accel()
+        """
+        Takes keyboard input and moves Player object accordingly
+        """
+        self.player.gravity()
 
+        # Support for keeping a key held down
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.player.left()
@@ -49,6 +55,7 @@ class KeyboardController(Controller):
         elif keys[pygame.K_w]:
             self.player.power()
 
+        # Keys that must be repressed
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 # If pressed key is ESC quit program

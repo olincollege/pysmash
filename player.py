@@ -41,7 +41,7 @@ class Player(pygame.sprite.Sprite):
     def crouch(self):
         pass
 
-    def reset_accel(self):
+    def gravity(self):
         self.acc = vec(0,0.7)
 
     @property
