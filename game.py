@@ -19,9 +19,8 @@ class Game:
     def mainloop(self):
         while True:
             self.p1controller.move()
-            self.p1.gravity()
+            print(self.p1.pos, self.p1.vel)
             self.viewer.draw()
-            print(self.p1.x_pos, self.p1.y_pos)
             self.clock.tick(60)
             
 if __name__ == "__main__":

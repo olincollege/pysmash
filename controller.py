@@ -34,11 +34,20 @@ class KeyboardController(Controller):
     """
     """
     def move(self):
+        self.player.reset_accel()
+
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.player.left()
         if keys[pygame.K_RIGHT]:
             self.player.right()
+
+        if keys[pygame.K_a]:
+            self.player.attack()
+        elif keys[pygame.K_d]:
+            self.player.defense()
+        elif keys[pygame.K_w]:
+            self.player.power()
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -53,10 +62,4 @@ class KeyboardController(Controller):
                 else:
                     self.player.normal()
 
-                pressed = pygame.key.get_pressed()
-                if pressed[pygame.K_a]:
-                    self.player.attack()
-                elif pressed[pygame.K_d]:
-                    self.player.defense()
-                elif pressed[pygame.K_w]:
-                    self.player.power()
+        self.player.move()

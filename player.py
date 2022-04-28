@@ -4,6 +4,10 @@ class doctring
 import abc
 import pygame
 
+vec = pygame.math.Vector2
+ACC = 5
+FRIC = -.25
+
 class Player(pygame.sprite.Sprite):
     """
     Doctring
@@ -12,19 +16,18 @@ class Player(pygame.sprite.Sprite):
     direction, knockback, image_path):
         super().__init__()
         self.name = chosen_character
-        self.velocity = 0
-        self.accel = 0
-        self.x_pos = 0
-        self.y_pos = -420
         self.direction = 'left'
         self.knockback = knockback
         self._health = 0
-        self.image = pygame.transform.scale(pygame.image.load(image_path), (100, 200))
+        self.image = pygame.transform.scale(pygame.image.load(image_path), (50, 100))
         self.mover = 'stand'
         self.rect = self.image.get_rect()
         self.weight = weight
         self.speed = 34 / self.weight
-        self.isjumping = False
+
+        self.pos = vec((620, 360))
+        self.vel = vec(0,0)
+        self.acc = vec(0,0)
 
     def knockback(self):
         health = 1000 / self.weight
@@ -37,10 +40,9 @@ class Player(pygame.sprite.Sprite):
         pass
     def crouch(self):
         pass
-    def gravity(self):
-        self.rect.y += 3.3 * 3
-        self.rect.y = min(self.rect.y, 520)
-        self.y_pos = self.rect.y
+
+    def reset_accel(self):
+        self.acc = vec(0,0.7)
 
     @property
     def health():
@@ -53,16 +55,13 @@ class Player(pygame.sprite.Sprite):
         """
         docstring
         """
-        isjumping = True
-        
+        self.vel.y -= 20
 
-    def collide(self):
-        pass
     def left(self):
         """
         docstring
         """
-        self.rect.x -= self.speed
+        self.acc.x = -ACC
         self.mover = 'walk'
         self.direction_one = 'left'
 
@@ -70,10 +69,21 @@ class Player(pygame.sprite.Sprite):
         """
         docstring
         """
-        self.x_pos += self.speed
-        self.rect.x += self.speed
+        self.acc.x = ACC
         self.mover = 'walk'
         self.direction_one = 'right'
+
+    def move(self):
+        self.acc.x += self.vel.x * FRIC
+        self.vel += self.acc
+        self.pos += self.vel + .5 * self.acc
+
+        if self.pos.y > 720:
+            self.pos.y = 720
+            self.vel.y = 0
+
+        self.rect.midbottom = self.pos
+
     def normal(self):
         """
         docstring
