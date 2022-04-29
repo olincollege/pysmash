@@ -1,70 +1,106 @@
 """
 class doctring
 """
-current_row = 0
-current_column = 0
-class Player:
+# pylint: disable=unnecessary-pass
+import pygame
+
+vec = pygame.math.Vector2
+ACC = 5
+FRIC = -.25
+
+class Player(pygame.sprite.Sprite):
     """
     Doctring
     """
-    def __init__(self, chosen_character, velocity_one, position_one, \
-    direction_one, attack_one, knockback_one, health_one):
-        self.player_1_character = chosen_character
-        self.velocity_one = velocity_one
-        self.position_one = position_one
-        self.direction_one = direction_one 
-        self.attack_one = attack_one
-        self.knockback_one = knockback_one
-        self.health_one = health_one
-        #self.image = mw1.png
+    def __init__(self, chosen_character, weight, image_path):
+        super().__init__()
+        self.name = chosen_character
+        self.direction = 'left'
+        self._health = 0
+        self.image = pygame.transform.scale(pygame.image.load(image_path), (50, 100))
         self.mover = 'stand'
-        self.weight = self.player_1_character.weight()
+        self.rect = self.image.get_rect()
+        self.weight = weight
         self.speed = 34 / self.weight
 
+        self.pos = vec((620, 360))
+        self.vel = vec(0,0)
+        self.acc = vec(0,0)
+
     def knockback(self):
-        health = 1000 / self.weight
+        """
+        Knock a character back based on knockback amount from an attack
+
+        Args:
+            strength (int): amount of knockback to apply to the character
+        """
         pass
+
     def attack(self):
         pass
     def power(self):
         pass
     def defense(self):
         pass
+    def crouch(self):
+        pass
+
+    def gravity(self):
+        """
+        Apply acceleration due to gravity to player object
+        """
+        self.acc = vec(0,0.7)
+
+    @property
+    def health(self):
+        return self._health
+
+    def damage(self, amount):
+        self._health += amount
+
     def jump(self):
         """
-        docstring
+        Make the character jump
         """
-        self.mover = 'jump'
-        lift = 68 / self.weight
-        current_row += lift
-        self.postion_one = [current_row][current_column]
-    def collide(self):
-        pass
+        self.vel.y -= 20
+
     def left(self):
         """
-        docstring
+        Move the character left
         """
-        current_column -= self.speed
-        self.position_one = [current_row][current_column]
+        self.acc.x = -ACC
         self.mover = 'walk'
-        self.direction_one = 'left'
+        self.direction = 'left'
 
     def right(self):
         """
-        docstring
+        Move the character right
         """
-        current_column += self.speed
-        self.position_one = [current_row][current_column]
+        self.acc.x = ACC
         self.mover = 'walk'
-        self.direction_one = 'right'
+        self.direction = 'right'
+
+    def move(self):
+        """
+        Take the current acceleration and velocity, calculate player's position,
+        and update the player's rectangle
+        """
+        self.acc.x += self.vel.x * FRIC
+        self.vel += self.acc
+        self.pos += self.vel + .5 * self.acc
+
+        if self.pos.y > 720:
+            self.pos.y = 720
+            self.vel.y = 0
+
+        self.rect.midbottom = self.pos
+
     def normal(self):
         """
         docstring
         """
         self.mover = 'normal'
-        self.direction_one = self.direction_one
-        self.position_one = [current_row][current_column]
-    
+
     def character_image(self):
         """
         docstring
@@ -97,11 +133,3 @@ class Player:
             elif self.direction_one == 'left':
                 #self.image = mw2.png
                 print('attack left')
-        elif self.mover == 'defense':
-            if self.direction_one == 'right':
-                #self.image = mw2.png
-                print('defense right')
-            elif self.direction_one == 'left':
-                #self.image = mw2.png
-                print('defense left')
-        

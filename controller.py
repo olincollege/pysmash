@@ -1,59 +1,69 @@
-import pygame
+"""
+Contains Controller Classes for PySmash
+"""
+# pylint: disable=no-member
 from abc import ABC, abstractmethod
+import pygame
 
 class Controller(ABC):
-    def __init__(self, board):
+    """
+    Abstract class to define a character controller
+    """
+    def __init__(self, player):
         """
-        Creates a private instance attribute of a tic tac toe
-        board.
+        Creates a private instance attribute of a Smash player
 
-        Args: board is an instance of a `TicTacToeBoard`
+        Args: player is an instance of Player
         """
-        self._board = board
+        self._player = player
 
     @property
-    def board(self):
+    def player(self):
         """
-        A 'board' property that returns the tic-tac-toe
-        board stored in the `TicTacToeView` instance.
-
-        Returns: self._board which is a private
-            instance of the game board.
+        player property that returns the Player object the controller controls
         """
-        return self._board
+        return self._player
 
     @abstractmethod
     def move(self):
         """
         A method that is an abstract method that does nothing
         """
+        pass
 
 
-class TextController(Controller):
+class KeyboardController(Controller):
     """
+    Controller that allows keyboard control of character
     """
-    def move(self, player):
-            event = pygame.event.wait()
+    def move(self):
+        """
+        Takes keyboard input and moves Player object accordingly
+        """
+        self.player.gravity()
+
+        # Support for keeping a key held down
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.player.left()
+        if keys[pygame.K_RIGHT]:
+            self.player.right()
+
+        if keys[pygame.K_a]:
+            self.player.attack()
+        elif keys[pygame.K_d]:
+            self.player.defense()
+        elif keys[pygame.K_w]:
+            self.player.power()
+
+        # Keys that must be repressed
+        for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                # If pressed key is ESC quit program
-                if event.key == pygame.K_ESCAPE:
-                    self._print("ESC was pressed. quitting...")
-                    self.quit()
-                elif event.key == pygame.K_LEFT:
-                    player.left()
-                elif event.key == pygame.K_RIGHT:
-                    player.right()
-                elif event.key == pygame.K_DOWN:
-                    player.crouch()
-                elif event.key == pygame.K_UP or event.key == pygame.K_SPACE:
-                    player.jump()
+                if event.key == pygame.K_DOWN:
+                    self.player.crouch()
+                elif event.key in [pygame.K_UP, pygame.K_SPACE]:
+                    self.player.jump()
                 else:
-                    player.normal()
+                    self.player.normal()
 
-                pressed = pygame.key.get_pressed()
-                if pressed[pygame.K_a]:
-                    player.attack()
-                elif pressed[pygame.K_d]:
-                    player.defense()
-                elif pressed[pygame.K_w]:
-                    player.power()
+        self.player.move()
