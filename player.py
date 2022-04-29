@@ -1,6 +1,7 @@
 """
 class doctring
 """
+# pylint: disable=unnecessary-pass
 import pygame
 
 vec = pygame.math.Vector2

@@ -1,6 +1,7 @@
 """
 Main PySmash Game Class
 """
+# pylint: disable=no-member
 import pygame
 
 from view import WindowView
