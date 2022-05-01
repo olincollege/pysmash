@@ -47,7 +47,8 @@ class Player(pygame.sprite.Sprite):
 
     def gravity(self):
         """
-        Apply acceleration due to gravity to player object
+        Apply acceleration due to gravity to player object except if on a
+        platform
         """
         self.acc = vec(0,0.7)
 

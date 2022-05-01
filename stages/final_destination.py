@@ -14,5 +14,5 @@ class FinalDestination(Map):
         """
         Create platforms and construct Final Destination map
         """
-        self.platforms = pygame.sprite.Group(Platform(60,961,160,399))
+        self.platforms = pygame.sprite.Group(Platform(10,961,160,399))
         super().__init__('resources/fd.jpg', self.platforms)
