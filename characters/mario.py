@@ -2,6 +2,7 @@
 Class for Mario
 """
 # pylint: disable=too-few-public-methods
+# pylint: disable=import-error
 from player import Player
 
 class Mario(Player):
