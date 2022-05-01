@@ -1,10 +1,13 @@
+"""
+Contains classes related to creating PySmash maps/stages
+"""
+# pylint: disable=too-few-public-methods
 import pygame
 
-class Map:
+class Map():
     """
-    Map class which contains the necessary attributes for the different mapsggit 
+    Map class which contains the necessary attributes for the different maps
     """
-    
     def __init__(self, img_path, platforms):
         """
         defines the image and atributes of a specific map for the game
@@ -13,28 +16,19 @@ class Map:
             the map
         """
         self.platforms=platforms
-        self.image=img_path
+        self.image = pygame.transform.scale(pygame.image.load(img_path), (1240,720))
 
 class Platform(pygame.sprite.Sprite):
     """
-    class to define a general platform sets the values for its width 
-    length and starting coordinates 
+    class to define a general platform sets the values for its width
+    length and starting coordinates
     """
     def __init__(self, height, width, start_x, start_y):
-        self.rect.x=start_x
-        self.rect.y=start_y
-        self.rect.width=width
-        self.rect.height=height
-
-
-#creating Final Destination Map Object
-final_destination_image=""
-final_dest_plat_sprites=[]
-final_dest_plat_group=pygame.sprite.Group(final_dest_plat_sprites)
-final_destination=map(final_destination_image,final_dest_plat_group)
-
-#creating Battlefield Map Object
-battlefield_image=""
-battlefield_plat_sprites=[]
-battlefield_plat_group=pygame.sprite.Group(battlefield_plat_sprites)
-battlefield=map(final_destination_image, battlefield_plat_group)
+        """
+        Construct platform object based on given dimensions
+        """
+        super().__init__()
+        self.image = pygame.Surface((width, height))
+        self.rect = self.image.get_rect()
+        self.rect.x = start_x
+        self.rect.y = start_y

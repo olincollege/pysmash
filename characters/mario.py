@@ -2,9 +2,8 @@
 Class for Mario
 """
 # pylint: disable=too-few-public-methods
-import sys
-sys.path.append('..')
-from player import Player # pylint: disable=import-error,wrong-import-position
+# pylint: disable=import-error
+from player import Player
 
 class Mario(Player):
     """
@@ -16,4 +15,4 @@ class Mario(Player):
 
         Room for expansion with custom functions/attacks
         """
-        super().__init__('mario', 5, 2, 1, 'resources/mario.jpg')
+        super().__init__('mario', 5, 'resources/mario2.png')

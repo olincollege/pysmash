@@ -53,6 +53,6 @@ class WindowView(CharaterView):
         the screen
         """
         self.game.all_sprites.update()
-        self.screen.fill((255, 255, 255))
+        self.screen.blit(self.game.stage.image, (0,0))
         self.game.all_sprites.draw(self.screen)
         pygame.display.flip()

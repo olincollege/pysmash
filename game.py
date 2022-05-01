@@ -7,6 +7,7 @@ import pygame
 from view import WindowView
 from controller import KeyboardController
 from characters.mario import Mario
+from stages.final_destination import FinalDestination
 
 class Game:
     """
@@ -24,6 +25,9 @@ class Game:
         self.p1controller = KeyboardController(self.player1)
         self.all_sprites = pygame.sprite.Group()
         self.all_sprites.add(self.player1)
+
+        self.stage = FinalDestination()
+        self.player1.platforms = self.stage.platforms
 
         self.viewer = WindowView(self, 1240, 720)
 

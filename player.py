@@ -17,7 +17,7 @@ class Player(pygame.sprite.Sprite):
         self.name = chosen_character
         self.direction = 'left'
         self._health = 0
-        self.image = pygame.transform.scale(pygame.image.load(image_path), (50, 100))
+        self.image = pygame.transform.scale(pygame.image.load(image_path), (75, 125))
         self.mover = 'stand'
         self.rect = self.image.get_rect()
         self.weight = weight
@@ -47,9 +47,15 @@ class Player(pygame.sprite.Sprite):
 
     def gravity(self):
         """
-        Apply acceleration due to gravity to player object
+        Apply acceleration due to gravity to player object except if on a
+        platform
         """
         self.acc = vec(0,0.7)
+
+        hits = pygame.sprite.spritecollide(self, self.platforms, False)
+        if hits:
+            self.pos.y = hits[0].rect.top + 1
+            self.vel.y = 0
 
     @property
     def health(self):
@@ -88,10 +94,6 @@ class Player(pygame.sprite.Sprite):
         self.acc.x += self.vel.x * FRIC
         self.vel += self.acc
         self.pos += self.vel + .5 * self.acc
-
-        if self.pos.y > 720:
-            self.pos.y = 720
-            self.vel.y = 0
 
         self.rect.midbottom = self.pos
 
