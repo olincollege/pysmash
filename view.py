@@ -54,5 +54,6 @@ class WindowView(CharaterView):
         """
         self.game.all_sprites.update()
         self.screen.blit(self.game.stage.image, (0,0))
+        # self.game.stage.platforms.draw(self.screen)
         self.game.all_sprites.draw(self.screen)
         pygame.display.flip()

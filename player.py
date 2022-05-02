@@ -5,27 +5,30 @@ class doctring
 import pygame
 
 vec = pygame.math.Vector2
-ACC = 5
 FRIC = -.25
 
 class Player(pygame.sprite.Sprite):
     """
     Doctring
     """
-    def __init__(self, chosen_character, weight, image_path):
+    def __init__(self, weight, images, direction, acc):
         super().__init__()
-        self.name = chosen_character
-        self.direction = 'left'
+        self.direction = direction
         self._health = 0
-        self.image = pygame.transform.scale(pygame.image.load(image_path), (75, 125))
+        self.images = images
+        self.image = self.images['right']
         self.mover = 'stand'
         self.rect = self.image.get_rect()
         self.weight = weight
         self.speed = 34 / self.weight
+        self._stocks = 3
+        self.speed = acc
 
         self.pos = vec((620, 360))
         self.vel = vec(0,0)
         self.acc = vec(0,0)
+        
+        self.jump_count = 0
 
     def knockback(self):
         """
@@ -50,16 +53,21 @@ class Player(pygame.sprite.Sprite):
         Apply acceleration due to gravity to player object except if on a
         platform
         """
-        self.acc = vec(0,0.7)
+        self.acc = vec(0,0.5)
 
         hits = pygame.sprite.spritecollide(self, self.platforms, False)
         if hits:
             self.pos.y = hits[0].rect.top + 1
             self.vel.y = 0
+            self.jump_count = 2
 
     @property
     def health(self):
         return self._health
+
+    @property
+    def stocks(self):
+        return self._stocks
 
     def damage(self, amount):
         self._health += amount
@@ -68,13 +76,16 @@ class Player(pygame.sprite.Sprite):
         """
         Make the character jump
         """
-        self.vel.y -= 20
+        if self.jump_count:
+            self.vel.y = -15
+            self.jump_count -= 1
 
     def left(self):
         """
         Move the character left
         """
-        self.acc.x = -ACC
+        self.acc.x = -self.speed
+        self.image = self.images['left']
         self.mover = 'walk'
         self.direction = 'left'
 
@@ -82,7 +93,8 @@ class Player(pygame.sprite.Sprite):
         """
         Move the character right
         """
-        self.acc.x = ACC
+        self.acc.x = self.speed
+        self.image = self.images['right']
         self.mover = 'walk'
         self.direction = 'right'
 
@@ -96,6 +108,16 @@ class Player(pygame.sprite.Sprite):
         self.pos += self.vel + .5 * self.acc
 
         self.rect.midbottom = self.pos
+
+        self.is_dead()
+
+    def is_dead(self):
+        if not(-400 <= self.pos.x <= 1640) or  not(-400 <= self.pos.y <= 1120):
+            self._health = 0
+            self._stocks -= 1
+            self.pos = vec((620, 360))
+            self.direction 
+            print('you have died!')
 
     def normal(self):
         """
