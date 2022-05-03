@@ -18,4 +18,4 @@ class Mario(Player):
         """
         left = pygame.transform.scale(pygame.image.load('resources/mario_left.png'), (80, 120))
         right = pygame.transform.scale(pygame.image.load('resources/mario_right.png'), (80, 120))
-        super().__init__(5, {'left': left, 'right': right}, direction, 4)
+        super().__init__(5, {'left': left, 'right': right}, direction, 4, 23, 98, 25, 1, 0)
