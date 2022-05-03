@@ -26,6 +26,8 @@ class Game:
         self.p1controller = KeyboardController(self.player1)
         self.p2controller = KeyboardController2(self.player2)
         self.all_sprites = pygame.sprite.Group(self.player1, self.player2)
+        self.enemy_sprites.add(self.player2)
+        self.enemy_sprites = pygame.sprite.Group()
         # self.all_sprites.add(self.player1)
         # self.all_sprites.add(self.player2)
 

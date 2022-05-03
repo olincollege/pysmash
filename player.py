@@ -11,7 +11,8 @@ class Player(pygame.sprite.Sprite):
     """
     Doctring
     """
-    def __init__(self, weight, images, direction, acc):
+    def __init__(self, weight, images, direction, acc, attack_damage,\
+        knockback, attack_base_knockback, multiplier, percent):
         super().__init__()
         self.direction = direction
         self._health = 0
@@ -20,7 +21,6 @@ class Player(pygame.sprite.Sprite):
         self.mover = 'stand'
         self.rect = self.image.get_rect()
         self.weight = weight
-        self.speed = 34 / self.weight
         self._stocks = 3
         self.speed = acc
 
@@ -30,23 +30,38 @@ class Player(pygame.sprite.Sprite):
         
         self.jump_count = 0
 
-    def knockback(self):
-        """
-        Knock a character back based on knockback amount from an attack
+        self.attack_damage = attack_damage
+        self.knockback = knockback #knockback growth
+        self.attack_base_knockback = attack_base_knockback #base knockback
+        self.multiplier = multiplier
+        self.percent = percent
 
-        Args:
-            strength (int): amount of knockback to apply to the character
-        """
-        pass
+    # def knockback(self, calculation):#, attack_damage):
+    #     """
+    #     Knock a character back based on knockback amount from an attack
+
+    #     Args:
+    #         strength (int): amount of knockback to apply to the character
+    #     """
+    #     calculation
+
+    def calculation_knockback(self):
+        # (((((Percent.Value/10 + Percent.Value*Damage/20) * 200/Weight+100 + 1.4) + 18) + Scaling) + BKB) * Ratio
+		# local LaunchSpeed = KnockbackCalculation*0.03
+        self.percent += self.attack_damage
+        self.calculation_y = (((self.percent + self.attack_damage) * 0.1 + self.attack_damage * \
+        (self.percent + self.attack_damage)) * self.multiplier * 1.4 * \
+        (200/(self.weight + 100)) + 18) * self.knockback * 0.01 + self.attack_base_knockback
+        if self.direction == 'right':
+            self.calculation_x = self.calculation_y
+        elif self.direction == 'left':
+            self.calculation_x = - self.calculation_y
+        self.vel = vec(self.calculation_x, self.calculation_y)
+
 
     def attack(self):
         pass
-    def power(self):
-        pass
-    def defense(self):
-        pass
-    def crouch(self):
-        pass
+
 
     def gravity(self):
         """
