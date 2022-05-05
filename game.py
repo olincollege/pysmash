@@ -46,8 +46,9 @@ class Game:
         h = victim.health
         d = attacker.attack_damage
         w = victim.weight
+        s = .05
         b = attacker.base_knockback
-        knockback = (((h/10 + h*d/20) * w) + 10) + b
+        knockback = ((((h/10 + h*d/20) * w) + 10) * s) + b
         return knockback
 
     def mainloop(self):
@@ -57,9 +58,9 @@ class Game:
         while True:
             self.p1controller.move()
             self.p2controller.move()
+            print(self.player2.vel)
             self.check_attack()
             # print(f'p1: {self.player1.health} {self.player1.stocks}, p2: {self.player2.health} {self.player2.stocks}')
-            print(self.player2.vel)
             self.viewer.draw()
             self.clock.tick(60)
 
