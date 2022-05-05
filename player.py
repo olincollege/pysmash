@@ -11,7 +11,7 @@ class Player(pygame.sprite.Sprite):
     """
     Doctring
     """
-    def __init__(self, weight, images, direction, acc):
+    def __init__(self, weight, images, direction, acc, damage):
         super().__init__()
         self.direction = direction
         self._health = 0
@@ -30,6 +30,9 @@ class Player(pygame.sprite.Sprite):
         
         self.jump_count = 0
 
+        self.attacking = 0
+        self.attack_damage = damage
+
     def knockback(self):
         """
         Knock a character back based on knockback amount from an attack
@@ -40,13 +43,9 @@ class Player(pygame.sprite.Sprite):
         pass
 
     def attack(self):
-        pass
-    def power(self):
-        pass
-    def defense(self):
-        pass
-    def crouch(self):
-        pass
+        self.attacking = 30
+        if self.direction == 'left':
+            self.pos.x -= 30
 
     def gravity(self):
         """
@@ -65,12 +64,17 @@ class Player(pygame.sprite.Sprite):
     def health(self):
         return self._health
 
+    @health.setter
+    def health(self, value):
+        self._health = value
+
     @property
     def stocks(self):
         return self._stocks
 
-    def damage(self, amount):
-        self._health += amount
+    @stocks.setter
+    def stocks(self, value):
+        self._stocks = value
 
     def jump(self):
         """
@@ -108,6 +112,8 @@ class Player(pygame.sprite.Sprite):
         self.pos += self.vel + .5 * self.acc
 
         self.rect.midbottom = self.pos
+        self.set_boxes()
+        self.character_image()
 
         self.is_dead()
 
@@ -116,7 +122,6 @@ class Player(pygame.sprite.Sprite):
             self._health = 0
             self._stocks -= 1
             self.pos = vec((620, 360))
-            self.direction 
             print('you have died!')
 
     def normal(self):
@@ -129,31 +134,17 @@ class Player(pygame.sprite.Sprite):
         """
         docstring
         """
-        if self.mover == 'normal':
-            if self.direction_one == 'right':
-                #self.image = mw2.png
-                print('stand right')
-            elif self.direction_one == 'left':
-                #self.image = mw2.png
-                print('stand left')
-        elif self.mover == 'walk':
-            if self.direction_one == 'right':
-                #self.image = mw2.png
-                print('walk right')
-            elif self.direction_one == 'left':
-                #self.image = mw2.png
-                print('walk left')
-        elif self.mover == 'jump':
-            if self.direction_one == 'right':
-                #self.image = mw2.png
-                print('jump right')
-            elif self.direction_one == 'left':
-                #self.image = mw2.png
-                print('jump left')
-        elif self.mover == 'attack':
-            if self.direction_one == 'right':
-                #self.image = mw2.png
-                print('attack right')
-            elif self.direction_one == 'left':
-                #self.image = mw2.png
-                print('attack left')
+        if self.attacking > 0:
+            self.attacking -= 1
+            if self.direction == 'right':
+                self.image = self.images['attack_r']
+            else:
+                self.image = self.images['attack_l']
+            if self.attacking == 0 and self.direction == 'left':
+                self.pos.x += 30
+        else:
+            self.hitbox = pygame.Rect(0,0,0,0)
+            if self.direction == 'right':
+                self.image = self.images['right']
+            else:
+                self.image = self.images['left']

@@ -21,19 +21,26 @@ class Game:
         pygame.init()
         self.clock = pygame.time.Clock()
 
-        self.player1 = player1
-        self.player2 = player2
+        self.viewer = WindowView(self, 1240, 720)
+
+        self.player1 = Mario('left')
+        self.player2 = Mario('right')
         self.p1controller = KeyboardController(self.player1)
         self.p2controller = KeyboardController2(self.player2)
         self.all_sprites = pygame.sprite.Group(self.player1, self.player2)
-        # self.all_sprites.add(self.player1)
-        # self.all_sprites.add(self.player2)
 
         self.stage = FinalDestination()
         self.player1.platforms = self.stage.platforms
         self.player2.platforms = self.stage.platforms
 
-        self.viewer = WindowView(self, 1240, 720)
+
+    def check_attack(self):
+        if self.player1.hitbox.colliderect(self.player2.hurtbox):
+            self.player2.health += self.player1.attack_damage
+            #knockback
+        if self.player2.hitbox.colliderect(self.player1.hurtbox):
+            self.player1.health += self.player2.attack_damage
+            #knockback
 
     def mainloop(self):
         """
@@ -42,9 +49,11 @@ class Game:
         while True:
             self.p1controller.move()
             self.p2controller.move()
+            self.check_attack()
+            print(f'p1: {self.player1.health} {self.player1.stocks}, p2: {self.player2.health} {self.player2.stocks}')
             self.viewer.draw()
             self.clock.tick(60)
 
 if __name__ == "__main__":
-    game = Game(Mario('left'), Mario('right'))
+    game = Game(1, 2)
     game.mainloop()
