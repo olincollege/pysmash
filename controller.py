@@ -62,7 +62,6 @@ class KeyboardController(Controller):
                 else:
                     pygame.event.post(event)
                     self.player.normal()
-
         self.player.move()
 
 class KeyboardController2(Controller):

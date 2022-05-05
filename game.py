@@ -37,10 +37,18 @@ class Game:
     def check_attack(self):
         if self.player1.hitbox.colliderect(self.player2.hurtbox):
             self.player2.health += self.player1.attack_damage
-            #knockback
+            self.player2.knockback(self.knockback_calcs(self.player1, self.player2), self.player1.direction)
         if self.player2.hitbox.colliderect(self.player1.hurtbox):
             self.player1.health += self.player2.attack_damage
-            #knockback
+            self.player1.knockback(self.knockback_calcs(self.player2, self.player1), self.player2.direction)
+
+    def knockback_calcs(self, attacker, victim):
+        h = victim.health
+        d = attacker.attack_damage
+        w = victim.weight
+        b = attacker.base_knockback
+        knockback = (((h/10 + h*d/20) * w) + 10) + b
+        return knockback
 
     def mainloop(self):
         """
@@ -50,7 +58,8 @@ class Game:
             self.p1controller.move()
             self.p2controller.move()
             self.check_attack()
-            print(f'p1: {self.player1.health} {self.player1.stocks}, p2: {self.player2.health} {self.player2.stocks}')
+            # print(f'p1: {self.player1.health} {self.player1.stocks}, p2: {self.player2.health} {self.player2.stocks}')
+            print(self.player2.vel)
             self.viewer.draw()
             self.clock.tick(60)
 

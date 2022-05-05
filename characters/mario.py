@@ -21,11 +21,16 @@ class Mario(Player):
         self.spritesheet = SpriteSheet('resources/mario_sheet.png')
         right = pygame.transform.scale(self.spritesheet.image_at((17,24,25,38), (47,54,153)), (50,76))
         left = pygame.transform.flip(right, flip_x=True, flip_y=False)
-
         attack_r = pygame.transform.scale(self.spritesheet.image_at((46,1003,44,31), (47,54,153)), (88,62))
         attack_l = pygame.transform.flip(attack_r, flip_x=True, flip_y=False)
-        super().__init__(5, {'left': left, 'right': right, 'attack_r': attack_r, 'attack_l': attack_l}, direction, 4, 2/3)
+        self.images = {'left': left, 'right': right, 'attack_r': attack_r, 'attack_l': attack_l}
+        super().__init__(direction)
+
         self.hitbox = pygame.Rect(self.rect.x, self.rect.y+20, 20, 20)
+        self.weight = 5
+        self.speed = 4
+        self.attack_damage = 10
+        self.base_knockback = 10
     
     def set_boxes(self):
         if self.attacking > 0 and self.direction == 'left':
@@ -34,3 +39,8 @@ class Mario(Player):
         else:
             self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 50, 76)
             self.hitbox = pygame.Rect(self.rect.x+50, self.rect.y+15, 40, 35)
+
+    def attack(self):
+        self.attacking = 30
+        if self.direction == 'left':
+            self.pos.x -= 30

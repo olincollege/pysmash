@@ -2,66 +2,47 @@
 class doctring
 """
 # pylint: disable=unnecessary-pass
+import abc
 import pygame
 
 vec = pygame.math.Vector2
 FRIC = -.25
 
-class Player(pygame.sprite.Sprite):
+class Player(abc.ABC, pygame.sprite.Sprite):
     """
     Doctring
     """
-    def __init__(self, weight, images, direction, acc, damage):
+    def __init__(self, direction):
         super().__init__()
         self.direction = direction
         self._health = 0
-        self.images = images
-        self.image = self.images['right']
-        self.mover = 'stand'
+        self.image = self.images[direction]
         self.rect = self.image.get_rect()
-        self.weight = weight
         self._stocks = 3
-        self.speed = acc
 
         self.pos = vec((620, 360))
         self.vel = vec(0,0)
         self.acc = vec(0,0)
         
         self.jump_count = 0
-
-        self.attack_damage = damage
-        self.knockback = knockback #knockback growth
-        self.attack_base_knockback = attack_base_knockback #base knockback
-        self.multiplier = multiplier
-
         self.attacking = 0
 
-    # def knockback(self, calculation):#, attack_damage):
-    #     """
-    #     Knock a character back based on knockback amount from an attack
+    def knockback(self, strength_y, direction):
+        """
+        Knock a character back based on knockback amount from an attack
 
-    #     Args:
-    #         strength (int): amount of knockback to apply to the character
-    #     """
-    #     calculation
+        Args:
+            strength (int): amount of knockback to apply to the character
+        """
+        if direction == 'right':
+            strength_x = strength_y
+        elif direction == 'left':
+            strength_x = -strength_y
+        self.vel = vec(strength_x, strength_y)
 
-    def calculation_knockback(self):
-        # (((((Percent.Value/10 + Percent.Value*Damage/20) * 200/Weight+100 + 1.4) + 18) + Scaling) + BKB) * Ratio
-		# local LaunchSpeed = KnockbackCalculation*0.03
-        self.calculation_y = (((self.percent + self.attack_damage) * 0.1 + self.attack_damage * \
-        (self.percent + self.attack_damage)) * self.multiplier * 1.4 * \
-        (200/(self.weight + 100)) + 18) * self.knockback * 0.01 + self.attack_base_knockback
-        if self.direction == 'right':
-            self.calculation_x = self.calculation_y
-        elif self.direction == 'left':
-            self.calculation_x = - self.calculation_y
-        self.vel = vec(self.calculation_x, self.calculation_y)
-
-
+    @abc.abstractmethod
     def attack(self):
-        self.attacking = 30
-        if self.direction == 'left':
-            self.pos.x -= 30
+        pass
 
     def gravity(self):
         """
