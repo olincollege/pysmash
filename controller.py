@@ -43,18 +43,12 @@ class KeyboardController(Controller):
         self.player.gravity()
 
         # Support for keeping a key held down
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            self.player.left()
-        if keys[pygame.K_RIGHT]:
-            self.player.right()
-
-        if keys[pygame.K_a]:
-            self.player.attack()
-        elif keys[pygame.K_d]:
-            self.player.defense()
-        elif keys[pygame.K_w]:
-            self.player.power()
+        if self.player.attacking == 0:
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_LEFT]:
+                self.player.left()
+            if keys[pygame.K_RIGHT]:
+                self.player.right()
 
         # Keys that must be repressed
         for event in pygame.event.get():
@@ -63,10 +57,11 @@ class KeyboardController(Controller):
                     self.player.crouch()
                 elif event.key in [pygame.K_UP, pygame.K_SPACE]:
                     self.player.jump()
+                elif event.key == pygame.K_SLASH:
+                    self.player.attack()
                 else:
                     pygame.event.post(event)
                     self.player.normal()
-
         self.player.move()
 
 class KeyboardController2(Controller):
@@ -80,26 +75,18 @@ class KeyboardController2(Controller):
         self.player.gravity()
 
         # Support for keeping a key held down
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_a]:
-            self.player.left()
-        if keys[pygame.K_d]:
-            self.player.right()
-        # if keys[pygame.K_w]:
-        #     self.player.jump()
-
-        if keys[pygame.K_a]:
-            self.player.attack()
-        elif keys[pygame.K_d]:
-            self.player.defense()
-        elif keys[pygame.K_w]:
-            self.player.power()
+        if self.player.attacking == 0:
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_a]:
+                self.player.left()
+            if keys[pygame.K_d]:
+                self.player.right()
 
         # Keys that must be repressed
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_DOWN:
-                    self.player.crouch()
+                if event.key == pygame.K_1:
+                    self.player.attack()
                 elif event.key == pygame.K_w:
                     self.player.jump()
                 else:

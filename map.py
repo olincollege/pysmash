@@ -4,10 +4,12 @@ Contains classes related to creating PySmash maps/stages
 # pylint: disable=too-few-public-methods
 import pygame
 
-class Map():
+
+class Map:
     """
     Map class which contains the necessary attributes for the different maps
     """
+
     def __init__(self, img_path, platforms):
         """
         defines the image and atributes of a specific map for the game
@@ -15,14 +17,17 @@ class Map():
         Args: platforms is a list of sprites representing the platforms on
             the map
         """
-        self.platforms=platforms
-        self.image = pygame.transform.scale(pygame.image.load(img_path), (1240,720))
+        self.platforms = platforms
+        self.image = pygame.transform.scale(pygame.image.load(img_path),
+                (1240, 720))
+
 
 class Platform(pygame.sprite.Sprite):
     """
     class to define a general platform sets the values for its width
     length and starting coordinates
     """
+
     def __init__(self, height, width, start_x, start_y):
         """
         Construct platform object based on given dimensions

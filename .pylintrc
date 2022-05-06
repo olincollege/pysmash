@@ -1,0 +1,5 @@
+[FORMAT]
+
+max-line-length=80
+extension-pkg-whitelist=pygame
+disable=unnecessary-pass

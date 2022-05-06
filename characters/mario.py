@@ -1,21 +1,67 @@
 """
 Class for Mario
 """
-# pylint: disable=too-few-public-methods
 # pylint: disable=import-error
 import pygame
+from spritesheet import SpriteSheet
 from player import Player
+
 
 class Mario(Player):
     """
     Class for Mario character
     """
+
+    # pylint: disable=too-many-instance-attributes
+    # pylint: disable=attribute-defined-outside-init
+    # pylint: disable=no-member
+
     def __init__(self, direction):
         """
         Creates Player object with Mario's attributes
 
         Room for expansion with custom functions/attacks
         """
-        left = pygame.transform.scale(pygame.image.load('resources/mario_left.png'), (80, 120))
-        right = pygame.transform.scale(pygame.image.load('resources/mario_right.png'), (80, 120))
-        super().__init__(5, {'left': left, 'right': right}, direction, 4)
+        pygame.init()
+        self.spritesheet = SpriteSheet("resources/mario_sheet.png")
+        right = pygame.transform.scale(
+            self.spritesheet.image_at((17, 24, 25, 38), (47, 54, 153)), (50, 76)
+        )
+        left = pygame.transform.flip(right, flip_x=True, flip_y=False)
+        attack_r = pygame.transform.scale(
+            self.spritesheet.image_at((46, 1003, 44, 31), (47, 54, 153)), (88, 62)
+        )
+        attack_l = pygame.transform.flip(attack_r, flip_x=True, flip_y=False)
+        self.images = {
+            "left": left,
+            "right": right,
+            "attack_r": attack_r,
+            "attack_l": attack_l,
+        }
+        super().__init__(direction)
+
+        self.weight = 5
+        self.speed = 4
+        self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 50, 76)
+
+    def set_boxes(self):
+        """
+        Update Mario's hitboxes and hurtboxes
+        """
+        if self.attacking > 0 and self.direction == "left":
+            self.hurtbox = pygame.Rect(self.rect.x + 38, self.rect.y, 50, 76)
+            self.hitbox = pygame.Rect(self.rect.x, self.rect.y + 15, 40, 35)
+        else:
+            self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 50, 76)
+            self.hitbox = pygame.Rect(self.rect.x + 50, self.rect.y + 15, 40, 35)
+
+    def attack(self):
+        """
+        Perform a tilt attack
+        """
+        self.attack_damage = 10
+        self.base_knockback = 3
+        self.knockback_ratio = 2 / 3
+        self.attacking = 30
+        if self.direction == "left":
+            self.pos.x -= 30
