@@ -35,10 +35,10 @@ class Game:
 
 
     def check_attack(self):
-        if self.player1.hitbox.colliderect(self.player2.hurtbox):
+        if self.player1.hitbox.colliderect(self.player2.hurtbox) and self.player2.damage_cooldown == 0:
             self.player2.health += self.player1.attack_damage
             self.player2.knockback(self.knockback_calcs(self.player1, self.player2), self.player1.direction)
-        if self.player2.hitbox.colliderect(self.player1.hurtbox):
+        if self.player2.hitbox.colliderect(self.player1.hurtbox) and self.player1.damage_cooldown == 0:
             self.player1.health += self.player2.attack_damage
             self.player1.knockback(self.knockback_calcs(self.player2, self.player1), self.player2.direction)
 
@@ -58,9 +58,8 @@ class Game:
         while True:
             self.p1controller.move()
             self.p2controller.move()
-            print(self.player2.vel)
             self.check_attack()
-            # print(f'p1: {self.player1.health} {self.player1.stocks}, p2: {self.player2.health} {self.player2.stocks}')
+            print(f'p1: {self.player1.health} {self.player1.stocks}, p2: {self.player2.health} {self.player2.stocks}')
             self.viewer.draw()
             self.clock.tick(60)
 

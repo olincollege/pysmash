@@ -19,6 +19,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         self.image = self.images[direction]
         self.rect = self.image.get_rect()
         self._stocks = 3
+        self.aerial = False
 
         self.pos = vec((620, 360))
         self.vel = vec(0,0)
@@ -26,7 +27,8 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         
         self.jump_count = 0
         self.attacking = 0
-        self.knockback_flag = False
+        self.damage_cooldown = 0
+        self.knockback_counter = 0
 
     def knockback(self, strength_y, direction):
         """
@@ -39,8 +41,9 @@ class Player(abc.ABC, pygame.sprite.Sprite):
             strength_x = strength_y
         elif direction == 'left':
             strength_x = -strength_y
-        self.vel = vec(strength_x, -strength_y)
-        self.knockback_flag = True
+        self.vel = vec(strength_x, -strength_y*2/3)
+        self.damage_cooldown = 10
+        self.knockback_counter = self.health / 10
 
     @abc.abstractmethod
     def attack(self):
@@ -53,14 +56,15 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         """
 
         self.acc = vec(0,0.5)
-        if not self.knockback_flag:
+        if self.knockback_counter == 0:
             hits = pygame.sprite.spritecollide(self, self.platforms, False)
             if hits:
                 self.pos.y = hits[0].rect.top + 1
                 self.vel.y = 0
                 self.jump_count = 2
-        else:
-            self.knockback_flag = False
+                self.aerial = False
+            else:
+                self.aerial = True
 
     @property
     def health(self):
@@ -83,7 +87,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         Make the character jump
         """
         if self.jump_count:
-            self.vel.y = -15
+            self.vel.y = -13
             self.jump_count -= 1
 
     def left(self):
@@ -109,9 +113,18 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         Take the current acceleration and velocity, calculate player's position,
         and update the player's rectangle
         """
-        self.acc.x += self.vel.x * FRIC
-        self.vel += self.acc
-        self.pos += self.vel + .5 * self.acc
+        if self.knockback_counter == 0:
+            self.acc.x += self.vel.x * FRIC
+            self.vel += self.acc
+            self.pos += self.vel + .5 * self.acc
+        else:
+            self.vel.y += self.acc.y
+            self.pos += self.vel + .5 * self.acc
+            self.knockback_counter -= 1
+
+        if self.damage_cooldown > 0:
+            self.damage_cooldown -= 1
+
 
         self.rect.midbottom = self.pos
         self.set_boxes()
@@ -125,7 +138,6 @@ class Player(abc.ABC, pygame.sprite.Sprite):
             self._stocks -= 1
             self.pos = vec((620, 360))
             self.vel = vec((0, 0))
-            print('you have died!')
 
     def normal(self):
         """

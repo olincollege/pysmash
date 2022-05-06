@@ -30,7 +30,7 @@ class Mario(Player):
         self.weight = 5
         self.speed = 4
         self.attack_damage = 10
-        self.base_knockback = 10
+        self.base_knockback = 3
     
     def set_boxes(self):
         if self.attacking > 0 and self.direction == 'left':
