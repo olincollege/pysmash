@@ -61,7 +61,6 @@ class KeyboardController(Controller):
                     self.player.attack()
                 else:
                     pygame.event.post(event)
-                    self.player.normal()
         self.player.move()
 
 class KeyboardController2(Controller):
@@ -89,7 +88,5 @@ class KeyboardController2(Controller):
                     self.player.attack()
                 elif event.key == pygame.K_w:
                     self.player.jump()
-                else:
-                    self.player.normal()
 
         self.player.move()

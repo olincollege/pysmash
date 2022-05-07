@@ -18,7 +18,7 @@ class Game:
 
     # pylint: disable=too-many-instance-attributes
 
-    def __init__(self):
+    def __init__(self, player1, player2):
         """
         Create Game instance, define clock, player, controllers, viewers, and
         sprite groups
@@ -32,8 +32,8 @@ class Game:
 
         self.viewer = WindowView(self, 1240, 720)
 
-        self.player1 = Mario("left")
-        self.player2 = Mario("right")
+        self.player1 = player1
+        self.player2 = player2
         self.p1controller = KeyboardController(self.player1)
         self.p2controller = KeyboardController2(self.player2)
         self.all_sprites = pygame.sprite.Group(self.player1, self.player2)
