@@ -10,7 +10,7 @@ import pygame
 import logging
 
 # logging config
-logging.basicConfig(filename='server.log', filemode='w', level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 
 networks = {}
 NAME_DICT = {'mario': Mario}
@@ -75,9 +75,7 @@ async def main():
         game = await get_player_data(game)
         game.check_attack()
         message = make_server_message(game)
-        logging.debug(message[0][1], *message[0][7:10])
         await broadcast(pickle.dumps(message))
-        # logging.info(game.player1.health, game.player2.health)
         clock.tick(60)
 
 asyncio.run(main())

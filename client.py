@@ -33,7 +33,8 @@ async def main():
     reader, writer = await asyncio.open_connection(HOST, 5555)
     print('connection made')
     player_num = await reader.read(100)
-    print(player_num.decode())
+    player_num = player_num.decode()
+    print(player_num)
     player = CHARACTER()
     if player_num == 'player1':
         game=Game(player, Mario())
