@@ -1,10 +1,12 @@
 """
 Main PySmash Game Class
 """
+from dataclasses import asdict
 import pygame
 
 # pylint: disable=no-member
 
+from menus import start_menu
 from view import WindowView
 from controller import KeyboardController, KeyboardController2
 from characters.mario import Mario
@@ -67,22 +69,29 @@ class Game:
                 self.player2.direction,
                 self.player2.knockback_ratio,
             )
-
+     
     def mainloop(self):
+        """
+        Main program loop
+        """
+        while True:
+            start_menu(self)
+            # run choose characters
+            self.gameloop()
+            # Game over screen
+            
+    def gameloop(self):
         """
         Main game loop
         """
         while True:
+            if self.player1.stocks == 0 or self.player2.stocks == 0:
+                break
             self.p1controller.move()
             self.p2controller.move()
             self.check_attack()
-            print(
-                f"p1: {self.player1.health} {self.player1.stocks}, \
-                p2: {self.player2.health} {self.player2.stocks}"
-            )
             self.viewer.draw()
-            self.clock.tick(60)
-
+            self.clock.tick(60)                
 
 def knockback_calcs(attacker, victim):
     """
