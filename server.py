@@ -11,12 +11,13 @@ import pygame
 from game_multi import Game
 from messages import make_server_message, implement_player_message, update_game
 from characters.mario import Mario
+from characters.marth import Marth
 
 # logging config
 logging.basicConfig(level=logging.DEBUG)
 
 networks = {}
-NAME_DICT = {"mario": Mario}
+NAME_DICT = {"mario": Mario, "marth": Marth}
 BUFFER = 1024
 player1 = player2 = None
 clock = pygame.time.Clock()
@@ -97,6 +98,9 @@ async def main():
     while len(networks) < 2:
         await asyncio.sleep(2)
     await asyncio.sleep(2)
+
+    networks['p1'][1].write(player2.name.encode())
+    networks['p2'][1].write(player1.name.encode())
 
     game = Game(player1, player2)
     logging.info("generated game")

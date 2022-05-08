@@ -1,5 +1,5 @@
 """
-Class for Mario
+Class for Marth
 """
 # pylint: disable=import-error
 import pygame
@@ -40,8 +40,12 @@ class Marth(Player):
         }
         super().__init__()
 
+        self.name = 'marth'
         self.weight = 4
         self.speed = 4
+        self.attack_damage = 7
+        self.base_knockback = 3
+        self.knockback_ratio = 1 / 2
         self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 33, 77)
 
     def set_boxes(self):
@@ -56,15 +60,14 @@ class Marth(Player):
             self.hitbox = pygame.Rect(self.rect.x+25, self.rect.y, 40, 35)
         else:
             self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 33, 77)
-            self.hitbox = pygame.Rect(self.rect.x + 50, self.rect.y + 15, 40, 35)
 
     def attack(self):
         """
         Perform a tilt attack
         """
-        self.attack_damage = 10
+        self.attack_damage = 7
         self.base_knockback = 3
-        self.knockback_ratio = 2 / 3
-        self.attacking = 15
+        self.knockback_ratio = 1 / 2
+        self.attacking = 30
         if self.direction == "left":
             self.pos.x -= 30

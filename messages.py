@@ -15,7 +15,6 @@ def make_player_message(player):
     """
     return [
         player.name,
-        player.pnum,
         player.direction,
         player.health,
         player.stocks,
@@ -48,7 +47,6 @@ def implement_player_message(player, message):
     """
     (
         player.name,
-        player.pnum,
         player.direction,
         player.health,
         player.stocks,
