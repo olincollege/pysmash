@@ -97,4 +97,6 @@ def update_game(game, p1_data, p2_data):
     """
     game.player1 = implement_player_message(game.player1, p1_data)
     game.player2 = implement_player_message(game.player2, p2_data)
+    game.player1.character_image()
+    game.player2.character_image()
     return game

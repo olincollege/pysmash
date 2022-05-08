@@ -27,6 +27,7 @@ class Mario(Player):
             self.spritesheet.image_at((46, 1003, 44, 31), (47, 54, 153)), (88, 62)
         )
         attack_l = pygame.transform.flip(attack_r, flip_x=True, flip_y=False)
+
         self.images = {
             "left": left,
             "right": right,
@@ -61,6 +62,6 @@ class Mario(Player):
         self.attack_damage = 10
         self.base_knockback = 3
         self.knockback_ratio = 2 / 3
-        self.attacking = 30
+        self.attacking = 45
         if self.direction == "left":
             self.pos.x -= 30

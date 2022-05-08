@@ -96,6 +96,7 @@ async def main():
 
     while len(networks) < 2:
         await asyncio.sleep(2)
+    await asyncio.sleep(2)
 
     game = Game(player1, player2)
     logging.info("generated game")

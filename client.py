@@ -88,6 +88,8 @@ async def main():
         controller.move()
         await send_player_data(writer, player)
         game = await get_player_data(reader, game)
+        game.player1.character_image()
+        game.player2.character_image()
         viewer.draw()
         clock.tick(60)
 
