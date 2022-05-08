@@ -172,6 +172,8 @@ class Game:
         """
         self.start_menu()
         while True:
+            if self.player1.stocks == 0 or self.player2.stocks == 0:
+                break
             self.p1controller.move()
             self.p2controller.move()
             self.check_attack()
@@ -181,8 +183,7 @@ class Game:
             )
             self.viewer.draw()
             self.clock.tick(60)
-
-            
+   
 def knockback_calcs(attacker, victim):
     """
     Calculate the amount of knockback for a landed attack
