@@ -71,28 +71,30 @@ class Game:
      
     def mainloop(self):
         """
+        Main program loop
+        """
+        while True:
+            start_menu(self)
+            # run choose characters
+            self.gameloop()
+            # Game over screen
+    def gameloop(self):
+        """
         Main game loop
         """
-        start_menu(self)
         while True:
             if self.player1.stocks == 0 or self.player2.stocks == 0:
                 break
             self.p1controller.move()
             self.p2controller.move()
             self.check_attack()
-            print(
-                f"p1: {self.player1.health} {self.player1.stocks}, \
-                p2: {self.player2.health} {self.player2.stocks}"
-            )
             self.viewer.draw()
-            self.clock.tick(60)
+            self.clock.tick(60)                
 def start_menu(game):
     """
     Creates a start menu and starts or quits the game
     
-    Args: none
-
-    Returns: none
+    Args: game class 
     """
     screen = game.viewer.screen
     # white color for text
@@ -184,6 +186,7 @@ def start_menu(game):
 
         # updates the frames of the game 
         pygame.display.update()   
+
 def knockback_calcs(attacker, victim):
     """
     Calculate the amount of knockback for a landed attack
