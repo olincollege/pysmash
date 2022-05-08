@@ -13,9 +13,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
     Abstract Class representing player in PySmash
     """
 
-    # pylint: disable=too-many-instance-attributes
-
-    def __init__(self, direction):
+    def __init__(self):
         """
         Create player object with default values
 
@@ -23,10 +21,10 @@ class Player(abc.ABC, pygame.sprite.Sprite):
             direction (str): direction the player starts the game facing, either
                 'left' or 'right'
         """
-        super().__init__()
-        self.direction = direction
+        pygame.sprite.Sprite.__init__(self)
+        self.direction = None
         self._health = 0
-        self.image = self.images[direction]
+        self.image = self.images['left']
         self.rect = self.image.get_rect()
         self._stocks = 3
         self.hitbox = pygame.Rect(0, 0, 0, 0)
@@ -153,7 +151,6 @@ class Player(abc.ABC, pygame.sprite.Sprite):
 
         self.rect.midbottom = self.pos
         self.set_boxes()
-        self.character_image()
 
         self.is_dead()
 

@@ -1,7 +1,6 @@
 """
 Contains Controller Classes for PySmash
 """
-# pylint: disable=no-member
 from abc import ABC, abstractmethod
 import pygame
 
@@ -88,4 +87,5 @@ class KeyboardController2(Controller):
                     self.player.attack()
                 elif event.key == pygame.K_w:
                     self.player.jump()
+
         self.player.move()

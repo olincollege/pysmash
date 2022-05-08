@@ -1,7 +1,6 @@
 """
 Class for Mario
 """
-# pylint: disable=import-error
 import pygame
 from spritesheet import SpriteSheet
 from player import Player
@@ -12,11 +11,7 @@ class Mario(Player):
     Class for Mario character
     """
 
-    # pylint: disable=too-many-instance-attributes
-    # pylint: disable=attribute-defined-outside-init
-    # pylint: disable=no-member
-
-    def __init__(self, direction):
+    def __init__(self):
         """
         Creates Player object with Mario's attributes
 
@@ -32,17 +27,22 @@ class Mario(Player):
             self.spritesheet.image_at((46, 1003, 44, 31), (47, 54, 153)), (88, 62)
         )
         attack_l = pygame.transform.flip(attack_r, flip_x=True, flip_y=False)
+
         self.images = {
             "left": left,
             "right": right,
             "attack_r": attack_r,
             "attack_l": attack_l,
         }
-        super().__init__(direction)
+        super().__init__()
 
+        self.name = 'mario'
         self.weight = 5
         self.speed = 4
         self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 50, 76)
+        self.attack_damage = 10
+        self.base_knockback = 3
+        self.knockback_ratio = 2 / 3
 
     def set_boxes(self):
         """
@@ -62,6 +62,6 @@ class Mario(Player):
         self.attack_damage = 10
         self.base_knockback = 3
         self.knockback_ratio = 2 / 3
-        self.attacking = 30
+        self.attacking = 45
         if self.direction == "left":
             self.pos.x -= 30
