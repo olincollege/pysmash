@@ -149,9 +149,10 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         if self.damage_cooldown > 0:
             self.damage_cooldown -= 1
 
-        self.rect.midbottom = self.pos
         self.set_boxes()
         self.character_image()
+        self.rect = self.image.get_rect()
+        self.rect.midbottom = self.pos
 
         self.is_dead()
 
