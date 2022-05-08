@@ -2,12 +2,6 @@
 Main PySmash Game Class
 """
 import pygame
-
-# pylint: disable=no-member
-
-from view import WindowView
-from controller import KeyboardController, KeyboardController2
-from characters.mario import Mario
 from stages.final_destination import FinalDestination
 
 
@@ -16,9 +10,7 @@ class Game:
     Main PySmash Game Class
     """
 
-    # pylint: disable=too-many-instance-attributes
-
-    def __init__(self):
+    def __init__(self, player1, player2):
         """
         Create Game instance, define clock, player, controllers, viewers, and
         sprite groups
@@ -30,12 +22,8 @@ class Game:
         pygame.init()
         self.clock = pygame.time.Clock()
 
-        self.viewer = WindowView(self, 1240, 720)
-
-        self.player1 = Mario("left")
-        self.player2 = Mario("right")
-        self.p1controller = KeyboardController(self.player1)
-        self.p2controller = KeyboardController2(self.player2)
+        self.player1 = player1
+        self.player2 = player2
         self.all_sprites = pygame.sprite.Group(self.player1, self.player2)
 
         self.stage = FinalDestination()
@@ -65,41 +53,26 @@ class Game:
             self.player1.knockback(
                 knockback_calcs(self.player2, self.player1),
                 self.player2.direction,
-                self.player2.knockback_ratio,
+                self.player1.knockback_ratio,
             )
 
-    def mainloop(self):
-        """
-        Main game loop
-        """
-        while True:
-            self.p1controller.move()
-            self.p2controller.move()
-            self.check_attack()
-            print(
-                f"p1: {self.player1.health} {self.player1.stocks}, \
-                p2: {self.player2.health} {self.player2.stocks}"
-            )
-            self.viewer.draw()
-            self.clock.tick(60)
 
 
 def knockback_calcs(attacker, victim):
     """
     Calculate the amount of knockback for a landed attack
+
+    Args:
+        attacker (Player): Player that landed the attack
+        victim (Player): Player that was attacked
     """
     # Using single letter names for ease of reading and writing knockback
     # formula
-    # pylint: disable=invalid-name
-    h = victim.health
-    d = attacker.attack_damage
-    w = victim.weight
-    s = 0.05
-    b = attacker.base_knockback
-    knockback = ((((h / 10 + h * d / 20) * w) + 10) * s) + b
+    health = victim.health
+    damage = attacker.attack_damage
+    weight = victim.weight
+    scaler = 0.05
+    base = attacker.base_knockback
+    knockback = ((((health / 10 + health * damage / 20) * weight)\
+                + 10) * scaler) + base
     return knockback
-
-
-if __name__ == "__main__":
-    game = Game()
-    game.mainloop()

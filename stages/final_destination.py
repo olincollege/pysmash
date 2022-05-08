@@ -1,8 +1,6 @@
 """
 Final Destination stage class
 """
-# pylint: disable=too-few-public-methods
-# pylint: disable=import-error
 import pygame
 from map import Map, Platform
 

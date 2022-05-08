@@ -13,8 +13,6 @@ class Player(abc.ABC, pygame.sprite.Sprite):
     Abstract Class representing player in PySmash
     """
 
-    # pylint: disable=too-many-instance-attributes
-
     def __init__(self):
         """
         Create player object with default values

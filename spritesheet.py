@@ -22,9 +22,9 @@ class SpriteSheet:
         """Load the sheet."""
         try:
             self.sheet = pygame.image.load(filename)
-        except pygame.error as e: # pylint: disable=invalid-name
+        except pygame.error as error:
             print(f"Unable to load spritesheet image: {filename}")
-            raise FileNotFoundError from e
+            raise FileNotFoundError from error
 
     def image_at(self, rectangle, colorkey=None):
         """Load a specific image from a specific rectangle."""

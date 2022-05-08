@@ -1,7 +1,6 @@
 """
 Contains classes related to creating PySmash maps/stages
 """
-# pylint: disable=too-few-public-methods
 import pygame
 
 

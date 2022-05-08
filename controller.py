@@ -1,7 +1,6 @@
 """
 Contains Controller Classes for PySmash
 """
-# pylint: disable=no-member
 from abc import ABC, abstractmethod
 import pygame
 
