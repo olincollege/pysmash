@@ -65,7 +65,7 @@ class Game:
             self.player1.knockback(
                 knockback_calcs(self.player2, self.player1),
                 self.player2.direction,
-                self.player1.knockback_ratio,
+                self.player2.knockback_ratio,
             )
 
     def mainloop(self):
