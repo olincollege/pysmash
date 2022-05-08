@@ -6,7 +6,6 @@ import pygame
 
 # pylint: disable=no-member
 
-from menus import start_menu
 from view import WindowView
 from controller import KeyboardController, KeyboardController2
 from characters.mario import Mario
@@ -20,7 +19,7 @@ class Game:
 
     # pylint: disable=too-many-instance-attributes
 
-    def __init__(self):
+    def __init__(self, screen):
         """
         Create Game instance, define clock, player, controllers, viewers, and
         sprite groups
@@ -32,10 +31,10 @@ class Game:
         pygame.init()
         self.clock = pygame.time.Clock()
 
-        self.viewer = WindowView(self, 1240, 720)
+        self.viewer = WindowView(self, screen)
 
-        self.player1 = Mario("left")
-        self.player2 = Mario("right")
+        self.player1 = Mario()
+        self.player2 = Mario()
         self.p1controller = KeyboardController(self.player1)
         self.p2controller = KeyboardController2(self.player2)
         self.all_sprites = pygame.sprite.Group(self.player1, self.player2)
@@ -108,7 +107,8 @@ def knockback_calcs(attacker, victim):
     knockback = ((((h / 10 + h * d / 20) * w) + 10) * s) + b
     return knockback
 
+def launch_local(screen):
+    game = Game(screen)
+    game.gameloop()
 
-if __name__ == "__main__":
-    game = Game()
-    game.mainloop()
+

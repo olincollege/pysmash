@@ -1,12 +1,14 @@
 import pygame
+from game import launch_local
 
-def start_menu(game):
+def start_menu():
     """
     Creates a start menu and starts or quits the game
     
     Args: game class 
     """
-    screen = game.viewer.screen
+    pygame.init()
+    screen = pygame.display.set_mode([1240, 720])
     # white color for text
     color = (255,255,255) 
     # setting color shades for buttons
@@ -42,11 +44,11 @@ def start_menu(game):
                 # button the game is terminated 
                 if width-140 <= mouse[0] <= width and 0 <= mouse[1] <= 40: 
                     pygame.quit() 
-                
+                    return
                 elif width/2-280 <= mouse[0] <= width/2 and \
                     height/2 <= mouse[1] <= height/2+40: 
+                    launch_local(screen)
                     return
-                
                 elif width/2+280 <= mouse[0] <= width/2+280+140 and \
                     height/2 <= mouse[1] <= height/2+40: 
                     return    
@@ -93,6 +95,8 @@ def start_menu(game):
         screen.blit(title , (width/2-title_size/2.,height/4)) 
 
 
-
         # updates the frames of the game 
         pygame.display.update()   
+
+if __name__ == '__main__':
+    start_menu()

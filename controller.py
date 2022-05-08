@@ -71,7 +71,6 @@ class KeyboardController2(Controller):
         Takes keyboard input and moves Player object accordingly
         """
         self.player.gravity()
-
         # Support for keeping a key held down
         if self.player.attacking == 0:
             keys = pygame.key.get_pressed()
@@ -87,5 +86,4 @@ class KeyboardController2(Controller):
                     self.player.attack()
                 elif event.key == pygame.K_w:
                     self.player.jump()
-
         self.player.move()

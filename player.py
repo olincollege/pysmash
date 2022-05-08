@@ -151,6 +151,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
 
         self.rect.midbottom = self.pos
         self.set_boxes()
+        self.character_image()
 
         self.is_dead()
 

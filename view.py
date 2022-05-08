@@ -39,7 +39,7 @@ class WindowView(CharaterView):
     Class that draws the viewer to a PyGame window
     """
 
-    def __init__(self, game, x_dim, y_dim):
+    def __init__(self, game, screen):
         """
         Construct a WindowView object and create the window itself
 
@@ -49,7 +49,7 @@ class WindowView(CharaterView):
             y_dim (int): y dimension of window
         """
         super().__init__(game)
-        self.screen = pygame.display.set_mode([x_dim, y_dim])
+        self.screen = screen
 
     def draw(self):
         """
