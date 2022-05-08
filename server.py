@@ -91,8 +91,8 @@ async def main():
     """
     Main event loop, create connection and run game
     """
-    server = await asyncio.start_server(new_client, "127.0.0.1", 5555)
-    logging.info("listening on 127.0.0.1 on port 5555")
+    server = await asyncio.start_server(new_client, "0.0.0.0", 5555)
+    logging.info("listening on 0.0.0.0 on port 5555")
 
     while len(networks) < 2:
         await asyncio.sleep(2)
