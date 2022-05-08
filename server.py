@@ -111,6 +111,8 @@ async def main():
         game.check_attack()
         message = make_server_message(game)
         await broadcast(pickle.dumps(message))
+        if game.player1.stocks == 0 or game.player2.stocks == 0:
+            return
         clock.tick(60)
 
 

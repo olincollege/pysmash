@@ -17,9 +17,6 @@ from characters.mario import Mario
 from messages import make_player_message, update_game
 
 NAME_DICT = {"mario": Mario}
-
-HOST = sys.argv[1]
-CHARACTER = NAME_DICT[sys.argv[2]]
 BUFFER = 1024
 
 pygame.init()
@@ -57,16 +54,16 @@ async def send_player_data(writer, player):
     await writer.drain()
 
 
-async def main():
+async def main(screen, host, character):
     """
     Main event loop, create connection and run game
     """
-    reader, writer = await asyncio.open_connection(HOST, 5555)
+    reader, writer = await asyncio.open_connection(host, 5555)
     print("connection made")
     player_num = await reader.read(100)
     player_num = player_num.decode()
     print(player_num)
-    player = CHARACTER()
+    player = character()
     if player_num == "player1":
         game = Game(player, Mario())
         player = game.player1
@@ -82,7 +79,7 @@ async def main():
 
     await send_player_data(writer, player)
     await get_player_data(reader, game)
-    viewer = WindowView(game, 1240, 720)
+    viewer = WindowView(game, screen)
 
     while True:
         controller.move()
@@ -93,4 +90,5 @@ async def main():
         viewer.draw()
         clock.tick(60)
 
-asyncio.run(main())
+def launch_client(screen, host, character):
+    asyncio.run(main(screen, host, Mario))

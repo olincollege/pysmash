@@ -68,16 +68,6 @@ class Game:
                 self.player2.direction,
                 self.player2.knockback_ratio,
             )
-     
-    def mainloop(self):
-        """
-        Main program loop
-        """
-        while True:
-            start_menu(self)
-            # run choose characters
-            self.gameloop()
-            # Game over screen
             
     def gameloop(self):
         """
@@ -85,7 +75,7 @@ class Game:
         """
         while True:
             if self.player1.stocks == 0 or self.player2.stocks == 0:
-                break
+                return
             self.p1controller.move()
             self.p2controller.move()
             self.check_attack()
