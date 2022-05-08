@@ -58,10 +58,12 @@ def multi_threaded_client(connection):
         data = connection.recv(buffer)
         data_variable = pickle.loads(data)
         data_variable.process_id
-        response = 'Server message: ' + data.decode('utf-8')
-        variable = NetworkDataPTwo()
-        data_string = pickle.dumps(variable)
-        ServerSideSocket.send(data_string)
+        variable_one = NetworkDataPOne()
+        data_string_one = pickle.dumps(variable_one)
+        variable_two = NetworkDataPTwo()
+        data_string_two = pickle.dumps(variable_two)
+        ServerSideSocket.send(data_string_one)
+        ServerSideSocket.send(data_string_two)
         connection.close()
 while True:
     Client, address = ServerSideSocket.accept()
@@ -72,5 +74,33 @@ while True:
     ServerSideSocket.close()
 
 
+
+
+
+
+import asyncio, socket
+
+async def handle_client(client):
+    loop = asyncio.get_event_loop()
+    request = None
+    while request != 'quit':
+        request = (await loop.sock_recv(client, 255)).decode('utf8')
+        response = str(eval(request)) + '\n'
+        await loop.sock_sendall(client, response.encode('utf8'))
+    client.close()
+
+async def run_server():
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(('localhost', 15555))
+    server.listen(8)
+    server.setblocking(False)
+
+    loop = asyncio.get_event_loop()
+
+    while True:
+        client, _ = await loop.sock_accept(server)
+        loop.create_task(handle_client(client))
+
+asyncio.run(run_server())
 
 
