@@ -40,6 +40,7 @@ class Mario(Player):
         }
         super().__init__()
 
+        self.name = 'mario'
         self.weight = 5
         self.speed = 4
         self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 50, 76)

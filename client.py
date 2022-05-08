@@ -5,45 +5,59 @@ import pickle
 
 from view import WindowView
 from controller import KeyboardController, KeyboardController2
-from view import WindowView
+from game import Game
 from characters.mario import Mario
 
-import messages
+from messages import make_player_message, implement_player_message, update_game
+
+NAME_DICT = {'mario': Mario}
 
 HOST = sys.argv[1]
-CHARACTER = sys.argv[2]
+CHARACTER = NAME_DICT[sys.argv[2]]
+BUFFER = 1024
 
 pygame.init()
 clock = pygame.time.Clock()
 
+async def get_player_data(reader, game):
+    raw = await reader.read(1024)
+    p1_data, p2_data = pickle.loads(raw)
+    return update_game(game, p1_data, p2_data)
+
+async def send_player_data(writer, player):
+    writer.write(pickle.dumps(make_player_message(player)))
+    await writer.drain()
+
 async def main():
-    player = Mario()
-    controller = KeyboardController(player)
 
     reader, writer = await asyncio.open_connection(HOST, 5555)
     print('connection made')
-
     player_num = await reader.read(100)
     print(player_num.decode())
+    player = CHARACTER()
     if player_num == 'player1':
+        game=Game(player, Mario())
+        player = game.player1
         player.direction = 'right'
+        player.pnum = 'p1'
     else:
+        game=Game(Mario(), player)
+        player = game.player2
         player.direction = 'left'
+        player.pnum = 'p2'
 
-    writer.write(pickle.dumps(messages.make_client_message(player)))
-    await writer.drain()
-    
-    game = await pickle.loads(reader.read(1024))
+    controller = KeyboardController(player)
+
+    await send_player_data(writer, player)
+    await get_player_data(reader, game)
     viewer = WindowView(game, 1240, 720)
 
     while True:
         controller.move()
-        writer.write(pickle.dumps(player))
-        await writer.drain()
-        game = await pickle.loads(reader.read(1024))
-        player = exec(f'game.{player_num}')
-        self.viewer.draw(game)
-        self.clock.tick(60)
+        await send_player_data(writer, player)
+        game = await get_player_data(reader, game)
+        viewer.draw()
+        clock.tick(60)
 
 asyncio.run(main())
 

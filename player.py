@@ -23,7 +23,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
             direction (str): direction the player starts the game facing, either
                 'left' or 'right'
         """
-        super().__init__()
+        pygame.sprite.Sprite.__init__(self)
         self.direction = None
         self._health = 0
         self.image = self.images['left']
