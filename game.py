@@ -69,6 +69,13 @@ class Game:
                 self.player2.knockback_ratio,
             )
     def start_menu(self):
+        """
+        Creates a start menu and starts or quits the game
+        
+        Args: none
+
+        Returns: none
+        """
         screen = self.viewer.screen
         # white color for text
         color = (255,255,255) 
@@ -106,10 +113,12 @@ class Game:
                     if width-140 <= mouse[0] <= width and 0 <= mouse[1] <= 40: 
                         pygame.quit() 
                     
-                    elif width/2-280 <= mouse[0] <= width/2 and height/2 <= mouse[1] <= height/2+40: 
+                    elif width/2-280 <= mouse[0] <= width/2 and \
+                        height/2 <= mouse[1] <= height/2+40: 
                         return
                     
-                    elif width/2+280 <= mouse[0] <= width/2+280+140 and height/2 <= mouse[1] <= height/2+40: 
+                    elif width/2+280 <= mouse[0] <= width/2+280+140 and \
+                        height/2 <= mouse[1] <= height/2+40: 
                         return    
             # fills the screen with a color 
             screen.fill((25,25,112)) 
@@ -128,18 +137,24 @@ class Game:
             screen.blit(quit , (width-140+40,5)) 
             
             # create Local button      
-            if width/2-280 <= mouse[0] <= width/2-140 and height/2 <= mouse[1] <= height/2+40: 
-                pygame.draw.rect(screen,color_light,[width/2-280,height/2,140,40]) 
+            if width/2-280 <= mouse[0] <= width/2-140 and \
+                height/2 <= mouse[1] <= height/2+40: 
+                pygame.draw.rect(screen,color_light,
+                [width/2-280,height/2,140,40]) 
             else: 
-                pygame.draw.rect(screen,color_dark,[width/2-280,height/2,140,40]) 
+                pygame.draw.rect(screen,color_dark,
+                [width/2-280,height/2,140,40]) 
             # superimposing the text onto our button 
             screen.blit(local , (width/2+local_width/2-280,height/2+5)) 
             
             # create Online button      
-            if width/2+140 <= mouse[0] <= width/2+280 and height/2 <= mouse[1] <= height/2+40: 
-                pygame.draw.rect(screen,color_light,[width/2+140,height/2,140,40]) 
+            if width/2+140 <= mouse[0] <= width/2+280 and height/2 <= mouse[1] \
+                <= height/2+40: 
+                pygame.draw.rect(screen,color_light,
+                    [width/2+140,height/2,140,40]) 
             else: 
-                pygame.draw.rect(screen,color_dark,[width/2+140,height/2,140,40]) 
+                pygame.draw.rect(screen,color_dark, 
+                [width/2+140,height/2,140,40]) 
             # superimposing the text onto our button 
             screen.blit(online , (width/2+140+30,height/2+5)) 
             
