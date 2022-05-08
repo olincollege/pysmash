@@ -15,7 +15,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
 
     # pylint: disable=too-many-instance-attributes
 
-    def __init__(self, direction):
+    def __init__(self):
         """
         Create player object with default values
 
@@ -24,9 +24,9 @@ class Player(abc.ABC, pygame.sprite.Sprite):
                 'left' or 'right'
         """
         super().__init__()
-        self.direction = direction
+        self.direction = None
         self._health = 0
-        self.image = self.images[direction]
+        self.image = self.images['left']
         self.rect = self.image.get_rect()
         self._stocks = 3
         self.hitbox = pygame.Rect(0, 0, 0, 0)

@@ -1,0 +1,16 @@
+def make_client_message(player):
+    return [player.direction,
+        player.health,
+        player.stocks,
+        player.hitbox,
+        player.hurtbox,
+        player.pos,
+        player.vel,
+        player.acc,
+        player.jump_count,
+        player.attacking,
+        player.damage_cooldown,
+        player.knockback_counter,
+        player.attack_damage,
+        player.base_knockback,
+        player.knockback_ratio]

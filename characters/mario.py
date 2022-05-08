@@ -16,7 +16,7 @@ class Mario(Player):
     # pylint: disable=attribute-defined-outside-init
     # pylint: disable=no-member
 
-    def __init__(self, direction):
+    def __init__(self):
         """
         Creates Player object with Mario's attributes
 
@@ -38,11 +38,14 @@ class Mario(Player):
             "attack_r": attack_r,
             "attack_l": attack_l,
         }
-        super().__init__(direction)
+        super().__init__()
 
         self.weight = 5
         self.speed = 4
         self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 50, 76)
+        self.attack_damage = 10
+        self.base_knockback = 3
+        self.knockback_ratio = 2 / 3
 
     def set_boxes(self):
         """

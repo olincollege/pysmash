@@ -21,7 +21,7 @@ class SpriteSheet:
     def __init__(self, filename):
         """Load the sheet."""
         try:
-            self.sheet = pygame.image.load(filename).convert()
+            self.sheet = pygame.image.load(filename)
         except pygame.error as e: # pylint: disable=invalid-name
             print(f"Unable to load spritesheet image: {filename}")
             raise FileNotFoundError from e
@@ -30,7 +30,7 @@ class SpriteSheet:
         """Load a specific image from a specific rectangle."""
         # Loads image from x, y, x+offset, y+offset.
         rect = pygame.Rect(rectangle)
-        image = pygame.Surface(rect.size).convert()
+        image = pygame.Surface(rect.size)
         image.blit(self.sheet, (0, 0), rect)
         if colorkey is not None:
             if colorkey is -1:
