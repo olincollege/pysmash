@@ -186,3 +186,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
                 self.image = self.images["right"]
             else:
                 self.image = self.images["left"]
+    def lose(self):
+        if self._stocks == 0:
+            return True
+        return False

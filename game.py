@@ -9,6 +9,7 @@ from view import WindowView
 from controller import KeyboardController, KeyboardController2
 from characters.mario import Mario
 from stages.final_destination import FinalDestination
+from player import Player
 
 
 class Game:
@@ -72,7 +73,7 @@ class Game:
         """
         Main game loop
         """
-        while True:
+        while Player.lose(self,) == False:
             self.p1controller.move()
             self.p2controller.move()
             self.check_attack()
@@ -82,7 +83,6 @@ class Game:
             )
             self.viewer.draw()
             self.clock.tick(60)
-
 
 def knockback_calcs(attacker, victim):
     """

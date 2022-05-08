@@ -35,6 +35,23 @@ class NetworkDataPTwo:
 #     s.close
 
 
+# ClientMultiSocket = socket.socket()
+# host = '127.0.0.1'
+# port = 2004
+# print('Waiting for connection response')
+# try:
+#     ClientMultiSocket.connect((host, port))
+# except socket.error as e:
+#     print(str(e))
+# data = ClientMultiSocket.recv(1024)
+# data_variable = pickle.loads(data)
+# data_variable.process_id
+# while True:
+#     variable = NetworkDataPTwo()
+#     data_string_two = pickle.dumps(variable)
+#     ClientMultiSocket.send(data_string_two)
+#     ClientMultiSocket.close()
+
 ClientMultiSocket = socket.socket()
 host = '127.0.0.1'
 port = 2004
@@ -45,6 +62,7 @@ except socket.error as e:
     print(str(e))
 data = ClientMultiSocket.recv(1024)
 data_variable = pickle.loads(data)
+print(data_variable)
 data_variable.process_id
 while True:
     variable = NetworkDataPTwo()

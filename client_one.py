@@ -25,9 +25,20 @@ try:
     ClientMultiSocket.connect((host, port))
 except socket.error as e:
     print(str(e))
-data = ClientMultiSocket.recv(1024)
-data_variable = pickle.loads(data)
-data_variable.process_id
+data = []
+while True:
+    packet = ClientMultiSocket.recv(4096)
+    if not packet: break
+    data.append(packet)
+data_arr = pickle.loads(b"".join(data))
+print (data_arr)
+# data = ClientMultiSocket.recv(2048)
+# if not data: 
+#     break
+# packet += data
+# data_arr = pickle.loads(packet)
+# print (data_arr)
+# data_arr.process_id
 while True:
     variable = NetworkDataPOne()
     data_string_one = pickle.dumps(variable)
