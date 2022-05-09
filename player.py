@@ -7,7 +7,6 @@ import pygame
 vec = pygame.math.Vector2
 FRIC = -0.25
 
-
 class Player(abc.ABC, pygame.sprite.Sprite):
     """
     Abstract Class representing player in PySmash
@@ -34,9 +33,10 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         self.acc = vec(0, 0)
 
         self.jump_count = 0
-        self.attacking = 0
-        self.damage_cooldown = 0
         self.knockback_counter = 0
+        self.attack = 'tilt'
+        self.attack_cooldown = 0
+        self.damage_cooldown = 0
 
     def knockback(self, strength_y, direction, ratio):
         """
@@ -45,20 +45,29 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         Args:
             strength (int): amount of knockback to apply to the character
         """
-        print(strength_y)
         if direction == "right":
             strength_x = strength_y
         elif direction == "left":
             strength_x = -strength_y
+        else:
+            strength_x = strength_y
         self.vel = vec(strength_x, -strength_y * ratio)
         self.damage_cooldown = 10
         self.knockback_counter = self.health / 10
 
     @abc.abstractmethod
-    def attack(self):
+    def tilt(self):
         """
-        Abstract method for a character's attack. Defined on a per character
-        basis
+        Abstract method for a character's tilt attack. Defined on a per
+        character basis
+        """
+        pass
+
+    @abc.abstractmethod
+    def smash(self):
+        """
+        Abstract method for a character's smash attack. Defined on a per
+        character basis
         """
         pass
 
@@ -68,7 +77,9 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         platform
         """
         self.acc = vec(0, 0.5)
-        if self.knockback_counter <= 0:
+        if 185<self.pos.x<(185+861) and 405<((self.pos.y-70))<430:
+            self.vel.y=1
+        if self.knockback_counter <= 0  and 400>(self.pos.y-70):
             hits = pygame.sprite.spritecollide(self, self.platforms, False)
             if hits:
                 self.pos.y = hits[0].rect.top + 1
@@ -150,9 +161,14 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         if self.damage_cooldown > 0:
             self.damage_cooldown -= 1
 
-        self.rect.midbottom = self.pos
-        self.set_boxes()
+        if self.attack_cooldown > 0:
+            self.attack_cooldown -= 1
+            if self.attack_cooldown == 0 and self.direction == 'left':
+                self.pos.x += 30
+
         self.character_image()
+        self.set_boxes()
+        self.rect.midbottom = self.pos
 
         self.is_dead()
 
@@ -166,21 +182,28 @@ class Player(abc.ABC, pygame.sprite.Sprite):
             self._stocks -= 1
             self.pos = vec((620, 360))
             self.vel = vec((0, 0))
+            self.attack_cooldown=0
 
     def character_image(self):
         """
         Set which character image to be displayed
         """
-        if self.attacking > 0:
-            self.attacking -= 1
-            if self.direction == "right":
-                self.image = self.images["attack_r"]
-            else:
-                self.image = self.images["attack_l"]
-            if self.attacking == 0 and self.direction == "left":
-                self.pos.x += 30
+        if self.attack_cooldown > 0:
+            if self.attack == 'tilt':
+                if self.direction == "left":
+                    self.image = self.images["tilt_l"]
+                else:
+                    self.image = self.images["tilt_r"]
+                if self.attack_cooldown == 0 and self.direction == "left":
+                    self.pos.x += 30
+            if self.attack == 'smash':
+                if self.direction == "left":
+                    self.image = self.images["smash_l"]
+                else:
+                    self.image = self.images["smash_r"]
+                if self.attack_cooldown == 0 and self.direction == "left":
+                    self.pos.x += 30
         else:
-            self.hitbox = pygame.Rect(0, 0, 0, 0)
             if self.direction == "right":
                 self.image = self.images["right"]
             else:

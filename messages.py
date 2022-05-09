@@ -25,12 +25,11 @@ def make_player_message(player):
         player.acc,
         player.rect,
         player.jump_count,
-        player.attacking,
+        player.attack_cooldown,
         player.damage_cooldown,
         player.knockback_counter,
-        player.attack_damage,
-        player.base_knockback,
-        player.knockback_ratio,
+        player.attacks,
+        player.attack,
     ]
 
 
@@ -57,12 +56,11 @@ def implement_player_message(player, message):
         player.acc,
         player.rect,
         player.jump_count,
-        player.attacking,
+        player.attack_cooldown,
         player.damage_cooldown,
         player.knockback_counter,
-        player.attack_damage,
-        player.base_knockback,
-        player.knockback_ratio,
+        player.attacks,
+        player.attack,
     ) = message
     return player
 
