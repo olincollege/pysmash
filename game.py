@@ -86,17 +86,20 @@ class Game:
 def knockback_calcs(attacker, victim):
     """
     Calculate the amount of knockback for a landed attack
+
+    Args:
+        attacker (Player): Player that landed the attack
+        victim (Player): Player that was attacked
     """
     # Using single letter names for ease of reading and writing knockback
     # formula
-    # pylint: disable=invalid-name
-    h = victim.health
-    d = attacker.attacks[attacker.attack]['damage']
-    w = victim.weight
-    s = 0.04
-    b = attacker.attacks[attacker.attack]['base']
-    knockback = ((((h / 10 + h * d / 20) * w) + 10) * s) + b
-    print(knockback)
+    health = victim.health
+    damage = attacker.attacks[attacker.attack]['damage']
+    weight = victim.weight
+    scaler = 0.04
+    base = attacker.attacks[attacker.attack]['base']
+    knockback = ((((health / 10 + health * damage / 20) * weight)\
+                + 10) * scaler) + base
     return knockback
 
 def launch_local(screen, player1, player2):
