@@ -3,8 +3,6 @@ title: "About Us"
 permalink: /about/
 ---
 
-# About the Authors
-
 ## James Jagielski 
 Pronouns: He/Him  
 Graduation year: 2025
