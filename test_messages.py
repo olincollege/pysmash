@@ -12,6 +12,11 @@ vec = pygame.math.Vector2
 
 @pytest.fixture
 def mario():
+    """
+    creates an instance of the game
+
+    returns: game is equal to the class Game
+    """
     screen = pygame.display.set_mode([1240, 720])
     mario = Mario()
     game = Game(screen, mario, Marth())
@@ -19,6 +24,9 @@ def mario():
 
 
 def test_making_messages(mario):
+    """
+    This tests the messages being sent through the network.
+    """
     global message
     sender = mario
     sender.player1.jump_count = 2
@@ -32,6 +40,9 @@ def test_making_messages(mario):
 
 
 def test_implementing_messages(mario):
+    """
+    Tests the messages being recieved through the network.
+    """
     global message
     receiver = mario
     receiver.player1 = implement_player_message(receiver.player1, message)
