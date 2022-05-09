@@ -225,7 +225,7 @@ def character_menu():
                     return character1, character2
         # fills the screen with a color
         screen.fill((25, 25, 112))
-
+        mouse = pygame.mouse.get_pos()
         # create quit button
         if width - 140 <= mouse[0] <= width and 0 <= mouse[1] <= 40:
             pygame.draw.rect(screen, color_light, [width - 140, 0, 140, 40])
