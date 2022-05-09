@@ -22,7 +22,7 @@ class Game:
 
     # pylint: disable=too-many-instance-attributes
 
-    def __init__(self, screen):
+    def __init__(self, screen, character1, character2):
         """
         Create Game instance, define clock, player, controllers, viewers, and
         sprite groups
@@ -36,8 +36,8 @@ class Game:
 
         self.viewer = WindowView(self, screen)
 
-        self.player1 = Pikachu()
-        self.player2 = Mario()
+        self.player1 = character1
+        self.player2 = character2
         self.p1controller = KeyboardController(self.player1)
         self.p2controller = KeyboardController2(self.player2)
         self.all_sprites = pygame.sprite.Group(self.player1, self.player2)
@@ -101,8 +101,8 @@ def knockback_calcs(attacker, victim):
     print(knockback)
     return knockback
 
-def launch_local(screen):
-    game = Game(screen)
+def launch_local(screen, player1, player2):
+    game = Game(screen, player1, player2)
     game.gameloop()
 
 
