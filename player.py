@@ -7,6 +7,7 @@ import pygame
 vec = pygame.math.Vector2
 FRIC = -0.25
 
+
 class Player(abc.ABC, pygame.sprite.Sprite):
     """
     Abstract Class representing player in PySmash
@@ -23,7 +24,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.direction = None
         self._health = 0
-        self.image = self.images['left']
+        self.image = self.images["left"]
         self.rect = self.image.get_rect()
         self._stocks = 3
         self.hitbox = pygame.Rect(0, 0, 0, 0)
@@ -34,7 +35,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
 
         self.jump_count = 0
         self.knockback_counter = 0
-        self.attack = 'tilt'
+        self.attack = "tilt"
         self.attack_cooldown = 0
         self.damage_cooldown = 0
 
@@ -77,9 +78,9 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         platform
         """
         self.acc = vec(0, 0.5)
-        if 185<self.pos.x<(185+861) and 405<((self.pos.y-70))<430:
-            self.vel.y=1
-        if self.knockback_counter <= 0  and 400>(self.pos.y-70):
+        if 185 < self.pos.x < (185 + 861) and 405 < ((self.pos.y - 70)) < 430:
+            self.vel.y = 1
+        if self.knockback_counter <= 0 and 400 > (self.pos.y - 70):
             print(self.platforms)
             hits = pygame.sprite.spritecollide(self, self.platforms, False)
             if hits:
@@ -164,7 +165,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
 
         if self.attack_cooldown > 0:
             self.attack_cooldown -= 1
-            if self.attack_cooldown == 0 and self.direction == 'left':
+            if self.attack_cooldown == 0 and self.direction == "left":
                 self.pos.x += 30
 
         self.character_image()
@@ -183,21 +184,21 @@ class Player(abc.ABC, pygame.sprite.Sprite):
             self._stocks -= 1
             self.pos = vec((620, 360))
             self.vel = vec((0, 0))
-            self.attack_cooldown=0
+            self.attack_cooldown = 0
 
     def character_image(self):
         """
         Set which character image to be displayed
         """
         if self.attack_cooldown > 0:
-            if self.attack == 'tilt':
+            if self.attack == "tilt":
                 if self.direction == "left":
                     self.image = self.images["tilt_l"]
                 else:
                     self.image = self.images["tilt_r"]
                 if self.attack_cooldown == 0 and self.direction == "left":
                     self.pos.x += 30
-            if self.attack == 'smash':
+            if self.attack == "smash":
                 if self.direction == "left":
                     self.image = self.images["smash_l"]
                 else:

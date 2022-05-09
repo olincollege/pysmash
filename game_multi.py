@@ -30,7 +30,6 @@ class Game:
         self.player1.platforms = self.stage.platforms
         self.player2.platforms = self.stage.platforms
 
-
     def check_attack(self):
         """
         Check if a player has landed an attack and if so damage and knock them
@@ -41,11 +40,11 @@ class Game:
             and self.player2.damage_cooldown == 0
         ):
             attack = self.player1.attacks[self.player1.attack]
-            self.player2.health += attack['damage']
+            self.player2.health += attack["damage"]
             self.player2.knockback(
                 knockback_calcs(self.player1, self.player2),
                 self.player1.direction,
-                attack['ratio']
+                attack["ratio"],
             )
 
         if (
@@ -53,11 +52,11 @@ class Game:
             and self.player1.damage_cooldown == 0
         ):
             attack = self.player2.attacks[self.player2.attack]
-            self.player1.health += attack['damage']
+            self.player1.health += attack["damage"]
             self.player1.knockback(
                 knockback_calcs(self.player2, self.player1),
                 self.player2.direction,
-                attack['ratio']
+                attack["ratio"],
             )
 
 
@@ -72,10 +71,11 @@ def knockback_calcs(attacker, victim):
     # Using single letter names for ease of reading and writing knockback
     # formula
     health = victim.health
-    damage = attacker.attacks[attacker.attack]['damage']
+    damage = attacker.attacks[attacker.attack]["damage"]
     weight = victim.weight
     scaler = 0.04
-    base = attacker.attacks[attacker.attack]['base']
-    knockback = ((((health / 10 + health * damage / 20) * weight)\
-                + 10) * scaler) + base
+    base = attacker.attacks[attacker.attack]["base"]
+    knockback = (
+        (((health / 10 + health * damage / 20) * weight) + 10) * scaler
+    ) + base
     return knockback

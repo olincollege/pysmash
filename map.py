@@ -17,8 +17,9 @@ class Map:
             the map
         """
         self.platforms = platforms
-        self.image = pygame.transform.scale(pygame.image.load(img_path),
-                (1240, 720))
+        self.image = pygame.transform.scale(
+            pygame.image.load(img_path), (1240, 720)
+        )
 
 
 class Platform(pygame.sprite.Sprite):
