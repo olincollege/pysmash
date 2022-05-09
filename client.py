@@ -15,9 +15,10 @@ from controller import KeyboardController
 from game_multi import Game
 from characters.mario import Mario
 from characters.marth import Marth
+from characters.pikachu import Pikachu
 from messages import make_player_message, update_game
 
-NAME_DICT = {"mario": Mario, "marth": Marth}
+NAME_DICT = {'mario': Mario, 'marth': Marth, 'pikachu': Pikachu}
 BUFFER = 1024
 
 pygame.init()
