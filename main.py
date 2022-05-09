@@ -193,7 +193,7 @@ def character_menu():
                 ):
                     character2 = Marth()
                 elif (
-                    width / 3 + 560 <= mouse[0] <= width / 3 + 600
+                    width / 3 + 560 <= mouse[0] <= width / 3 + 700
                     and height / 2 <= mouse[1] <= height / 2 + 40
                 ):
                     character2 = Pikachu()
@@ -209,7 +209,7 @@ def character_menu():
                 ):
                     character1 = Marth()
                 elif (
-                    width / 3 + 560 <= mouse[0] <= width / 3 + 600
+                    width / 3 + 560 <= mouse[0] <= width / 3 + 700
                     and height / 2 - 80 <= mouse[1] <= height / 2 - 40
                 ):
                     character1 = Pikachu()
