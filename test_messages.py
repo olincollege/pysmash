@@ -13,9 +13,10 @@ vec = pygame.math.Vector2
 @pytest.fixture
 def mario():
     """
-    creates an instance of the game
+    Pytest Fixture that creates a game with Mario as player 1to test with
 
-    returns: game is equal to the class Game
+    Returns:
+        game (Game): game with Mario as player 1
     """
     screen = pygame.display.set_mode([1240, 720])
     mario = Mario()
@@ -25,7 +26,10 @@ def mario():
 
 def test_making_messages(mario):
     """
-    This tests the messages being sent through the network.
+    Test that a player class can successfully be translated into a message
+
+    Args:
+        mario (Game): Game with Mario as player 1
     """
     global message
     sender = mario
@@ -41,7 +45,10 @@ def test_making_messages(mario):
 
 def test_implementing_messages(mario):
     """
-    Tests the messages being recieved through the network.
+    Test that a message can be integrated into an existing player class
+    
+    Args:
+        mario (Game): Game with Mario as player 1
     """
     global message
     receiver = mario
