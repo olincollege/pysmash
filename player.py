@@ -77,9 +77,9 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         platform
         """
         self.acc = vec(0, 0.5)
-        if 185<self.pos.x<(185+861) and 405<((self.pos.y-self.rect.height))<430:
-            self.vel.y=0
-        if self.knockback_counter <= 0:
+        if 185<self.pos.x<(185+861) and 405<((self.pos.y-70))<430:
+            self.vel.y=1
+        if self.knockback_counter <= 0  and 400>(self.pos.y-70):
             hits = pygame.sprite.spritecollide(self, self.platforms, False)
             if hits:
                 self.pos.y = hits[0].rect.top + 1

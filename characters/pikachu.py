@@ -99,7 +99,7 @@ class Pikachu(Player):
         """
         self.acc = vec(0, 0.5)
         if 185<self.pos.x<(185+861) and 405<(self.pos.y-70)<430:
-            self.vel.y=0
+            self.vel.y=1
         if self.knockback_counter <= 0 and 405>(self.pos.y-70):
             hits = pygame.sprite.spritecollide(self, self.platforms, False)
             if hits:
