@@ -7,6 +7,10 @@ import pygame
 class Map:
     """
     Map class which contains the necessary attributes for the different maps
+
+    Attributes:
+        platforms (pygame.sprite.Group): group of platforms on the stage
+        image (pygame.image): image of stage to display
     """
 
     def __init__(self, img_path, platforms):
@@ -26,6 +30,10 @@ class Platform(pygame.sprite.Sprite):
     """
     class to define a general platform sets the values for its width
     length and starting coordinates
+
+    Attributes:
+        image (pygame.Surface): platform Surface and footprint
+        rect (pygame.Rect): Bounding rectangle of platform
     """
 
     def __init__(self, height, width, start_x, start_y):
