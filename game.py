@@ -11,7 +11,7 @@ class Game:
     """
     Main PySmash Game Class
 
-    Class atributes: 
+    Class atributes:
         clock: a pygame clock which tracks time used for refresh rate
         viewer: a Window view object
         player1: a player object for player number 1
@@ -57,35 +57,39 @@ class Game:
         """
         if (
             self.player1.hitbox.colliderect(self.player2.hurtbox)
-            and self.player2.damage_cooldown == 0 
-        ):  
-            if ((
-                self.player1.attack=="smash" and
-                self.player1.attack_cooldown<self.player1.smash_cooldown/2.
-                )==False):
+            and self.player2.damage_cooldown == 0
+        ):
+            # Check that we're under halfway through a smash
+            if (
+                self.player1.attack == "smash"
+                and self.player1.attack_cooldown
+                < self.player1.smash_cooldown / 2.0
+            ) == False:
                 attack = self.player1.attacks[self.player1.attack]
                 self.player2.health += attack["damage"]
                 self.player2.knockback(
                     knockback_calcs(self.player1, self.player2),
                     self.player1.direction,
                     attack["ratio"],
-            )
+                )
 
         if (
             self.player2.hitbox.colliderect(self.player1.hurtbox)
             and self.player1.damage_cooldown == 0
         ):
-            if ((
-                self.player2.attack=="smash" and
-                self.player2.attack_cooldown<self.player2.smash_cooldown/2.
-                )==False):
+            # Check that we're under halfway through a smash
+            if (
+                self.player2.attack == "smash"
+                and self.player2.attack_cooldown
+                < self.player2.smash_cooldown / 2.0
+            ) == False:
                 attack = self.player2.attacks[self.player2.attack]
                 self.player1.health += attack["damage"]
                 self.player1.knockback(
                     knockback_calcs(self.player2, self.player1),
                     self.player2.direction,
                     attack["ratio"],
-            )
+                )
 
     def gameloop(self):
         """
@@ -94,7 +98,7 @@ class Game:
         while True:
             if self.player1.stocks == 0:
                 return "Player 2"
-                
+
             elif self.player2.stocks == 0:
                 return "Player 1"
             self.p1controller.move()
