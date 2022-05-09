@@ -19,7 +19,7 @@ Run `main.py` and select the 'local' option, select your characters, and play th
 To play online, you must have a game server running. To start one, run `server.py`
 
 1. To connect as a client to the game, run `main.py`, then select the online option.
-2. In the terminal, input the local IP address of the server (you can obtain this by running `ifconifg` or `ip a` on a Linux server, or `iwconfig` on a Windows server)
+2. In the terminal, input the local IP address of the server (you can obtain this by running `ifconifg` or `ip a` on a Linux server, or `ipconfig` on a Windows server)
 3. Lastly, type in the name of the character you would like to play as (Marth, Mario, or Pikachu) in all lowercase letters. You will be reprompted if you enter an invalid name.
 
 ## Controls
