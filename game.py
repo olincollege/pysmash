@@ -36,7 +36,7 @@ class Game:
 
         self.viewer = WindowView(self, screen)
 
-        self.player1 = Mario()
+        self.player1 = Pikachu()
         self.player2 = Mario()
         self.p1controller = KeyboardController(self.player1)
         self.p2controller = KeyboardController2(self.player2)

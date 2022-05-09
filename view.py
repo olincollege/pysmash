@@ -62,9 +62,9 @@ class WindowView(CharaterView):
         pygame.draw.rect(self.screen, (255,255,255),
                  self.game.player1.hurtbox, 1)
         pygame.draw.rect(self.screen, (0,255,0), self.game.player1.hitbox, 1)
-        pygame.draw.rect(self.screen, (255,255,255),
-                 self.game.player2.hurtbox, 1)
-        #pygame.draw.rect(self.screen, (0,255,0), self.game.player1.rect, 1)
+        # pygame.draw.rect(self.screen, (255,255,255),
+        #         self.game.player2.hurtbox, 1)
+        # pygame.draw.rect(self.screen, (255,0,0), self.game.player1.rect, 1)
         self.game.all_sprites.draw(self.screen)
         color = (255,255,255)
         small_font = pygame.font.SysFont('Corbel',35)

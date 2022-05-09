@@ -1,5 +1,5 @@
 """
-Class for Mario
+Class for Pikachu
 """
 # pylint: disable=import-error
 import pygame
@@ -18,7 +18,7 @@ class Pikachu(Player):
 
     def __init__(self):
         """
-        Creates Player object with Marths's attributes
+        Creates Player object with Pikachu's attributes
 
         Room for expansion with custom functions/attacks
         """
@@ -28,47 +28,69 @@ class Pikachu(Player):
             self.spritesheet.image_at((5, 40, 35, 28), (134,255,104)), (70, 56)
         )
         left = pygame.transform.flip(right, flip_x=True, flip_y=False)
-        attack_r = pygame.transform.scale(
-            self.spritesheet.image_at((10, 3068, 60, 26), (134,255,104)),
+        tilt_r = pygame.transform.scale(
+            self.spritesheet.image_at((14,3067,55,28), (134,255,104)),
             (120, 52)
         )
-        attack_l = pygame.transform.flip(attack_r, flip_x=True, flip_y=False)
+        tilt_l = pygame.transform.flip(tilt_r, flip_x=True, flip_y=False)
+        smash_r = self.spritesheet.image_at((316, 1093, 120, 309), (255,255,255))
+        smash_l = pygame.transform.flip(smash_r, flip_x=True, flip_y=False)
         self.images = {
             "left": left,
             "right": right,
-            "attack_r": attack_r,
-            "attack_l": attack_l,
+            "tilt_r": tilt_r,
+            "tilt_l": tilt_l,
+            "smash_r": smash_r,
+            "smash_l": smash_l,
         }
         super().__init__()
 
+        self.name = 'pikachu'
         self.weight = 3
         self.speed = 4.5
         self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 70, 56)
+        self.attacks = {'tilt': {'damage': 5, 'base': 2, 'ratio': 1/2},
+                        'smash': {'damage': 20, 'base': 8, 'ratio': 1}}
 
     def set_boxes(self):
         """
-        Update Marth's hitboxes and hurtboxes
+        Update Pikachu's hitboxes and hurtboxes
         """
-        if self.attacking > 0 and self.direction == "left":
-            self.hurtbox = pygame.Rect(self.rect.x + 50, self.rect.y, 60, 52)
-            self.hitbox = pygame.Rect(self.rect.x, self.rect.y+18, 70, 34)
-        elif self.attacking > 0 and self.direction == "right":
-            self.hurtbox = pygame.Rect(self.rect.x+10, self.rect.y, 60, 52)
-            self.hitbox = pygame.Rect(self.rect.x+60, self.rect.y+18, 70, 34)
+        if self.attack_cooldown > 0:
+            if self.attack == 'tilt':
+                if self.direction == "left":
+                    self.hurtbox = pygame.Rect(self.rect.x + 58, self.rect.y, 62, 56)
+                    self.hitbox = pygame.Rect(self.rect.x, self.rect.y + 10, 68, 42)
+                else:
+                    self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 62, 56)
+                    self.hitbox = pygame.Rect(self.rect.x + 52, self.rect.y + 10, 68, 42)
+            if self.attack == 'smash':
+                self.hurtbox = pygame.Rect(self.rect.x + 50, self.rect.y + 236, 68, 52)
+                self.hitbox = pygame.Rect(self.rect.x + 37, self.rect.y - 15, 49, 322)
+                self.rect = self.image.get_rect()
         else:
             self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 70, 56)
-            self.hitbox = pygame.Rect(self.rect.x + 50, self.rect.y + 15, 40, 35)
+            self.hitbox = pygame.Rect(0,0,0,0)
+            self.rect = self.image.get_rect()
 
-    def attack(self):
+    def tilt(self):
         """
         Perform a tilt attack
         """
-        self.attack_damage = 10
-        self.base_knockback = 3
-        self.knockback_ratio = 2 / 3
-        self.attacking = 15
+        self.attack = 'tilt'
+        self.attack_cooldown = 15
         if self.direction == "left":
             self.pos.x -= 30
+
+    def smash(self):
+        """
+        Perform a smash attack
+        """
+        self.attack = 'smash'
+        self.attack_cooldown = 60
+        if self.direction == "left":
+            self.pos.x -= 30
+
     def gravity(self):
         """
         Apply acceleration due to gravity to player object except if on a
@@ -76,7 +98,7 @@ class Pikachu(Player):
         Changes jump count to 3
         """
         self.acc = vec(0, 0.5)
-        if self.knockback_counter == 0:
+        if self.knockback_counter <= 0:
             hits = pygame.sprite.spritecollide(self, self.platforms, False)
             if hits:
                 self.pos.y = hits[0].rect.top + 1

@@ -46,7 +46,7 @@ class Mario(Player):
         self.speed = 3
         self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 50, 76)
         self.attacks = {'tilt': {'damage': 10, 'base': 5, 'ratio': 2/3},
-                        'smash': {'damage': 25, 'base': 10, 'ratio': 2/3}}
+                        'smash': {'damage': 30, 'base': 10, 'ratio': 2/3}}
 
     def set_boxes(self):
         """

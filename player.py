@@ -49,6 +49,8 @@ class Player(abc.ABC, pygame.sprite.Sprite):
             strength_x = strength_y
         elif direction == "left":
             strength_x = -strength_y
+        else:
+            strength_x = strength_y
         self.vel = vec(strength_x, -strength_y * ratio)
         self.damage_cooldown = 10
         self.knockback_counter = self.health / 10
@@ -162,9 +164,9 @@ class Player(abc.ABC, pygame.sprite.Sprite):
             if self.attack_cooldown == 0 and self.direction == 'left':
                 self.pos.x += 30
 
-        self.rect.midbottom = self.pos
-        self.set_boxes()
         self.character_image()
+        self.set_boxes()
+        self.rect.midbottom = self.pos
 
         self.is_dead()
 
