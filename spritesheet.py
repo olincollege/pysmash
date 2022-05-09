@@ -14,10 +14,12 @@ Contains Class used to read images from spritesheet
 """
 import pygame
 
+
 class SpriteSheet:
     """
     Class to read and return images from spritesheet
     """
+
     def __init__(self, filename):
         """Load the sheet."""
         try:

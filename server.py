@@ -18,7 +18,7 @@ from characters.pikachu import Pikachu
 logging.basicConfig(level=logging.DEBUG)
 
 networks = {}
-NAME_DICT = {'mario': Mario, 'marth': Marth, 'pikachu': Pikachu}
+NAME_DICT = {"mario": Mario, "marth": Marth, "pikachu": Pikachu}
 BUFFER = 1024
 player1 = player2 = None
 clock = pygame.time.Clock()
@@ -100,8 +100,8 @@ async def main():
         await asyncio.sleep(2)
     await asyncio.sleep(2)
 
-    networks['p1'][1].write(player2.name.encode())
-    networks['p2'][1].write(player1.name.encode())
+    networks["p1"][1].write(player2.name.encode())
+    networks["p2"][1].write(player1.name.encode())
 
     game = Game(player1, player2)
     logging.info("generated game")

@@ -17,11 +17,12 @@ from characters.marth import Marth
 from characters.pikachu import Pikachu
 from messages import make_player_message, update_game
 
-NAME_DICT = {'mario': Mario, 'marth': Marth, 'pikachu': Pikachu}
+NAME_DICT = {"mario": Mario, "marth": Marth, "pikachu": Pikachu}
 BUFFER = 1024
 
 pygame.init()
 clock = pygame.time.Clock()
+
 
 async def get_player_data(reader, game):
     """
@@ -93,6 +94,7 @@ async def main(screen, host, character):
         game.player2.character_image()
         viewer.draw()
         clock.tick(60)
+
 
 def launch_client(screen, host, character):
     """
