@@ -1,3 +1,6 @@
+#Base menu from https://www.geeksforgeeks.org/creating-start-menu-in-pygame/
+#Highly edited to fit our use case
+
 import pygame
 from game import launch_local
 from client import launch_client

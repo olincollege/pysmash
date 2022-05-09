@@ -4,10 +4,12 @@ Main PySmash Game Class
 from dataclasses import asdict
 import pygame
 
+
 # pylint: disable=no-member
 
 from view import WindowView
 from controller import KeyboardController, KeyboardController2
+from characters.pikachu import Pikachu
 from characters.mario import Mario
 from characters.marth import Marth
 from stages.final_destination import FinalDestination
@@ -34,7 +36,7 @@ class Game:
 
         self.viewer = WindowView(self, screen)
 
-        self.player1 = Marth()
+        self.player1 = Pikachu()
         self.player2 = Mario()
         self.p1controller = KeyboardController(self.player1)
         self.p2controller = KeyboardController2(self.player2)
