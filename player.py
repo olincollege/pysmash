@@ -182,6 +182,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
             self._stocks -= 1
             self.pos = vec((620, 360))
             self.vel = vec((0, 0))
+            self.attack_cooldown=0
 
     def character_image(self):
         """
