@@ -159,6 +159,8 @@ class Player(abc.ABC, pygame.sprite.Sprite):
 
         if self.attack_cooldown > 0:
             self.attack_cooldown -= 1
+            if self.attack_cooldown == 0 and self.direction == 'left':
+                self.pos.x += 30
 
         self.rect.midbottom = self.pos
         self.set_boxes()
@@ -184,20 +186,15 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         if self.attack_cooldown > 0:
             if self.attack == 'tilt':
                 if self.direction == "left":
-                    self.image = self.images["tilt_r"]
-                else:
                     self.image = self.images["tilt_l"]
-                if self.attack_cooldown == 0 and self.direction == "left":
-                    self.pos.x += 30
+                else:
+                    self.image = self.images["tilt_r"]
             if self.attack == 'smash':
                 if self.direction == "left":
-                    self.image = self.images["smash_r"]
-                else:
                     self.image = self.images["smash_l"]
-                if self.attack_cooldown == 0 and self.direction == "left":
-                    self.pos.x += 30
+                else:
+                    self.image = self.images["smash_r"]
         else:
-            self.hitbox = pygame.Rect(0, 0, 0, 0)
             if self.direction == "right":
                 self.image = self.images["right"]
             else:
