@@ -15,8 +15,8 @@ from characters.pikachu import Pikachu
 
 pygame.init()
 screen = pygame.display.set_mode([1240, 720])
-pygame.mixer.music.load('resources/theme.mp3')
-pygame.mixer.music.play(-1)
+pygame.mixer.music.load('resources/final_destination.mp3')
+pygame.mixer.music.play()
 # white color for text
 color = (255,255,255)
 # setting color shades for buttons
@@ -177,7 +177,7 @@ def character_menu():
                     height/2 <= mouse[1] <= height/2+40:
                     print('Marth pressed')
                     character2 = Marth()
-                elif width/3+560 <= mouse[0] <= width/3+600 and \
+                elif width/3+560 <= mouse[0] <= width/3+700 and \
                     height/2 <= mouse[1] <= height/2+40:
                     print('Pikachu pressed')
                     character2 = Pikachu()
@@ -190,7 +190,7 @@ def character_menu():
                     height/2-80 <= mouse[1] <= height/2-40:
                     print('Marth pressed')
                     character1 = Marth()
-                elif width/3+560 <= mouse[0] <= width/3+600 and \
+                elif width/3+560 <= mouse[0] <= width/3+700 and \
                     height/2-80 <= mouse[1] <= height/2-40:
                     print('Pikachu pressed')
                     character1 = Pikachu()
