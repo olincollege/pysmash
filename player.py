@@ -77,6 +77,8 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         platform
         """
         self.acc = vec(0, 0.5)
+        if 185<self.pos.x<(185+861) and 405<((self.pos.y-self.rect.height))<430:
+            self.vel.y=0
         if self.knockback_counter <= 0:
             hits = pygame.sprite.spritecollide(self, self.platforms, False)
             if hits:
@@ -164,9 +166,9 @@ class Player(abc.ABC, pygame.sprite.Sprite):
             if self.attack_cooldown == 0 and self.direction == 'left':
                 self.pos.x += 30
 
-        self.character_image()
         self.set_boxes()
         self.rect.midbottom = self.pos
+        self.character_image()
 
         self.is_dead()
 
@@ -191,11 +193,15 @@ class Player(abc.ABC, pygame.sprite.Sprite):
                     self.image = self.images["tilt_l"]
                 else:
                     self.image = self.images["tilt_r"]
+                if self.attack_cooldown == 0 and self.direction == "left":
+                    self.pos.x += 30
             if self.attack == 'smash':
                 if self.direction == "left":
                     self.image = self.images["smash_l"]
                 else:
                     self.image = self.images["smash_r"]
+                if self.attack_cooldown == 0 and self.direction == "left":
+                    self.pos.x += 30
         else:
             if self.direction == "right":
                 self.image = self.images["right"]

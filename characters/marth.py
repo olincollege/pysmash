@@ -25,18 +25,25 @@ class Marth(Player):
         pygame.init()
         self.spritesheet = SpriteSheet("resources/marth_sheet.png")
         right = pygame.transform.scale(
-            self.spritesheet.image_at((0, 0, 30, 70), (0,128,0)), (33, 77)
+            self.spritesheet.image_at((0, 5, 30, 55), (0,128,0)), (42, 70)
         )
         left = pygame.transform.flip(right, flip_x=True, flip_y=False)
-        attack_r = pygame.transform.scale(
-            self.spritesheet.image_at((80, 220, 70, 50), (0,128,0)), (70, 50)
+        tilt_r = pygame.transform.scale(
+            self.spritesheet.image_at((80, 215, 70, 55), (0,128,0)), (98, 70)
         )
-        attack_l = pygame.transform.flip(attack_r, flip_x=True, flip_y=False)
+        tilt_l = pygame.transform.flip(tilt_r, flip_x=True, flip_y=False)
+        smash_r = pygame.transform.scale(
+            self.spritesheet.image_at((80, 650, 78, 73), (0,128,0)), (117, 110)
+        )
+        smash_l = pygame.transform.flip(smash_r, flip_x=True, flip_y=False)
+        
         self.images = {
             "left": left,
             "right": right,
-            "attack_r": attack_r,
-            "attack_l": attack_l,
+            "tilt_r": tilt_r,
+            "tilt_l": tilt_l,
+            "smash_r": smash_r,
+            "smash_l": smash_l,
         }
         super().__init__()
 
@@ -46,28 +53,57 @@ class Marth(Player):
         self.attack_damage = 7
         self.base_knockback = 3
         self.knockback_ratio = 1 / 2
-        self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 33, 77)
+        self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 42, 70)
+        self.attacks = {'tilt': {'damage': 7, 'base': 3, 'ratio': 1/2},
+                        'smash': {'damage': 25, 'base': 8, 'ratio': 2/3}}
 
     def set_boxes(self):
         """
         Update Marth's hitboxes and hurtboxes
         """
-        if self.attack_cooldown > 0 and self.direction == "left":
-            self.hurtbox = pygame.Rect(self.rect.x + 38, self.rect.y, 25, 50)
-            self.hitbox = pygame.Rect(self.rect.x, self.rect.y, 40, 35)
-        elif self.attack_cooldown > 0 and self.direction == "right":
-            self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 25, 50)
-            self.hitbox = pygame.Rect(self.rect.x+25, self.rect.y, 40, 35)
+        if self.attack_cooldown > 0:
+            if self.attack=="tilt":
+                if self.direction == "left":
+                    self.hurtbox = pygame.Rect(self.rect.x + 38,
+                    self.rect.y, 50, 70)
+                    self.hitbox = pygame.Rect(self.rect.x,
+                    self.rect.y+10, 50, 35)
+                    self.rect = self.image.get_rect()
+                elif self.direction == "right":
+                    self.hurtbox = pygame.Rect(self.rect.x,
+                    self.rect.y, 50, 70)
+                    self.hitbox = pygame.Rect(self.rect.x+50, 
+                    self.rect.y+10, 50, 35)
+                    self.rect = self.image.get_rect()
+            if self.attack=="smash":
+                if self.direction == "left":
+                    self.hurtbox = pygame.Rect(self.rect.x + 37*1.4,
+                    self.rect.y+31*1.4, 42*1.4, 42*1.4)
+                    self.hitbox = pygame.Rect(self.rect.x,
+                    self.rect.y, 66*1.4, 60*1.4)
+                    self.rect = self.image.get_rect()
+                elif self.direction == "right":
+                    self.hurtbox = pygame.Rect(self.rect.x,
+                    self.rect.y+31*1.4, 42*1.4, 42*1.4)
+                    self.hitbox = pygame.Rect(self.rect.x+12*1.4,
+                    self.rect.y, 66*1.4, 60*1.4)
+                    self.rect = self.image.get_rect()    
         else:
-            self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 33, 77)
-
-    def attack(self):
+            self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 42, 70)
+            self.rect = self.image.get_rect()
+    def tilt(self):
         """
         Perform a tilt attack
         """
-        self.attack_damage = 7
-        self.base_knockback = 3
-        self.knockback_ratio = 1 / 2
-        self.attack_cooldown = 30
+        self.attack = 'tilt'
+        self.attack_cooldown = 15
         if self.direction == "left":
             self.pos.x -= 30
+
+    def smash(self):
+        """
+        Perform a smash attack
+        """
+        self.attack = 'smash'
+        self.attack_cooldown = 75
+
