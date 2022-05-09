@@ -2,10 +2,10 @@ title: PySmash
 remote_theme: hydecorp/hydejack
 
 menu:
-  - title: About Us
-    url: /about/
   - title: Home
     url: /
+  - title: About Us
+    url: /about/
   - title: Documentation
     url: /docs/
 
