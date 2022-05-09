@@ -95,9 +95,10 @@ def knockback_calcs(attacker, victim):
     h = victim.health
     d = attacker.attack_damage
     w = victim.weight
-    s = 0.05
+    s = 0.04
     b = attacker.base_knockback
     knockback = ((((h / 10 + h * d / 20) * w) + 10) * s) + b
+    print(knockback)
     return knockback
 
 def launch_local(screen):

@@ -59,8 +59,8 @@ class Mario(Player):
         """
         Perform a tilt attack
         """
-        self.attack_damage = 10
-        self.base_knockback = 3
+        self.attack_damage = 15
+        self.base_knockback = 5
         self.knockback_ratio = 2 / 3
         self.attacking = 45
         if self.direction == "left":

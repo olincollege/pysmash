@@ -14,14 +14,14 @@ from view import WindowView
 from controller import KeyboardController
 from game_multi import Game
 from characters.mario import Mario
+from characters.marth import Marth
 from messages import make_player_message, update_game
 
-NAME_DICT = {"mario": Mario}
+NAME_DICT = {"mario": Mario, "marth": Marth}
 BUFFER = 1024
 
 pygame.init()
 clock = pygame.time.Clock()
-
 
 async def get_player_data(reader, game):
     """
@@ -60,24 +60,28 @@ async def main(screen, host, character):
     """
     reader, writer = await asyncio.open_connection(host, 5555)
     print("connection made")
+
     player_num = await reader.read(100)
     player_num = player_num.decode()
     print(player_num)
-    player = character()
+
+    player = NAME_DICT[character]()
+    print(player.name)
+    await send_player_data(writer, player)
+    other = await reader.read(100)
+    print(other.decode())
+
     if player_num == "player1":
-        game = Game(player, Mario())
+        game = Game(player, NAME_DICT[other.decode()]())
         player = game.player1
         player.direction = "right"
-        player.pnum = "p1"
     else:
-        game = Game(Mario(), player)
+        game = Game(NAME_DICT[other.decode()](), player)
         player = game.player2
         player.direction = "left"
-        player.pnum = "p2"
 
     controller = KeyboardController(player)
 
-    await send_player_data(writer, player)
     await get_player_data(reader, game)
     viewer = WindowView(game, screen)
 
@@ -91,4 +95,4 @@ async def main(screen, host, character):
         clock.tick(60)
 
 def launch_client(screen, host, character):
-    asyncio.run(main(screen, host, Mario))
+    asyncio.run(main(screen, host, character))

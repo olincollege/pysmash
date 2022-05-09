@@ -45,6 +45,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         Args:
             strength (int): amount of knockback to apply to the character
         """
+        print(strength_y)
         if direction == "right":
             strength_x = strength_y
         elif direction == "left":
@@ -67,7 +68,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         platform
         """
         self.acc = vec(0, 0.5)
-        if self.knockback_counter == 0:
+        if self.knockback_counter <= 0:
             hits = pygame.sprite.spritecollide(self, self.platforms, False)
             if hits:
                 self.pos.y = hits[0].rect.top + 1
@@ -137,7 +138,7 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         Take the current acceleration and velocity, calculate player's position,
         and update the player's rectangle
         """
-        if self.knockback_counter == 0:
+        if self.knockback_counter <= 0:
             self.acc.x += self.vel.x * FRIC
             self.vel += self.acc
             self.pos += self.vel + 0.5 * self.acc
@@ -149,10 +150,9 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         if self.damage_cooldown > 0:
             self.damage_cooldown -= 1
 
+        self.rect.midbottom = self.pos
         self.set_boxes()
         self.character_image()
-        self.rect = self.image.get_rect()
-        self.rect.midbottom = self.pos
 
         self.is_dead()
 
