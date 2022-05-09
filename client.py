@@ -5,7 +5,6 @@ CLI Args:
     Host IP Address
     Character Name
 """
-import sys
 import asyncio
 import pickle
 import pygame
@@ -15,9 +14,10 @@ from controller import KeyboardController
 from game_multi import Game
 from characters.mario import Mario
 from characters.marth import Marth
+from characters.pikachu import Pikachu
 from messages import make_player_message, update_game
 
-NAME_DICT = {"mario": Mario, "marth": Marth}
+NAME_DICT = {'mario': Mario, 'marth': Marth, 'pikachu': Pikachu}
 BUFFER = 1024
 
 pygame.init()
@@ -95,4 +95,12 @@ async def main(screen, host, character):
         clock.tick(60)
 
 def launch_client(screen, host, character):
+    """
+    Launch client for online multiplayer PySmash game
+
+    Args:
+        screen (pygame.display): display to run game on
+        host (str): IP address of game host
+        character (str): character to play as
+    """
     asyncio.run(main(screen, host, character))
