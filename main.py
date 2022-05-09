@@ -118,14 +118,7 @@ def wait_for_connection():
     screen.fill((25,25,112))
     # stores the (x,y) coordinates into
     # the variable as a tuple
-    mouse = pygame.mouse.get_pos()
-    # create quit button
-    if width-140 <= mouse[0] <= width and 0 <= mouse[1] <= 40:
-        pygame.draw.rect(screen,color_light,[width-140,0,140,40])
-    else:
-        pygame.draw.rect(screen,color_dark,[width-140,0,140,40])
     # superimposing the text onto our button
-    screen.blit(quit , (width-140+40,5))
     # Display title
     screen.blit(title , (width/2-title_size/2.,height/4))
     screen.blit(info , (width/2-info_size/2.,height/2))
@@ -154,6 +147,8 @@ def character_menu():
     mario_width,_ = small_font.size("Mario")
     marth_label = small_font.render('Marth' , True , color)
     pikachu_label = small_font.render('Pikachu' , True , color)
+    player1_label = small_font.render('Player 1:' , True , color)
+    player2_label = small_font.render('Player 2:' , True , color)
 
     title = title_font.render('Characters' , True , (30,144,255))
     title_size,title_size_height = title_font.size("Characters")
@@ -171,32 +166,32 @@ def character_menu():
                 # button the game is terminated
                 if width-140 <= mouse[0] <= width and 0 <= mouse[1] <= 40:
                     pygame.quit()
-                # Player 1
-                elif width/3-280 <= mouse[0] <= width/3-140 and \
-                    height/2 <= mouse[1] <= height/2+40:
-                    print('Mario pressed')
-                    character1 = Mario()
-                elif width/3+140 <= mouse[0] <= width/3+280 and \
-                    height/2 <= mouse[1] <= height/2+40:
-                    print('Marth pressed')
-                    character1 = Marth()
-                elif width/3+560 <= mouse[0] <= width/3+600 and \
-                    height/2 <= mouse[1] <= height/2+40:
-                    print('Pikachu pressed')
-                    character1 = Pikachu()
                 # Player 2
                 elif width/3-280 <= mouse[0] <= width/3-140 and \
-                    height/2-80 <= mouse[1] <= height/2-40:
+                    height/2 <= mouse[1] <= height/2+40:
                     print('Mario pressed')
                     character2 = Mario()
                 elif width/3+140 <= mouse[0] <= width/3+280 and \
-                    height/2-80 <= mouse[1] <= height/2-40:
+                    height/2 <= mouse[1] <= height/2+40:
                     print('Marth pressed')
                     character2 = Marth()
                 elif width/3+560 <= mouse[0] <= width/3+600 and \
-                    height/2-80 <= mouse[1] <= height/2-40:
+                    height/2 <= mouse[1] <= height/2+40:
                     print('Pikachu pressed')
                     character2 = Pikachu()
+                # Player 1
+                elif width/3-280 <= mouse[0] <= width/3-140 and \
+                    height/2-80 <= mouse[1] <= height/2-40:
+                    print('Mario pressed')
+                    character1 = Mario()
+                elif width/3+140 <= mouse[0] <= width/3+280 and \
+                    height/2-80 <= mouse[1] <= height/2-40:
+                    print('Marth pressed')
+                    character1 = Marth()
+                elif width/3+560 <= mouse[0] <= width/3+600 and \
+                    height/2-80 <= mouse[1] <= height/2-40:
+                    print('Pikachu pressed')
+                    character1 = Pikachu()
                 elif width-140 <= mouse[0] <= width and 680 <= mouse[1] <= 720:
                     return character1,character2
         # fills the screen with a color
@@ -221,13 +216,16 @@ def character_menu():
         else:
             pygame.draw.rect(screen,color_dark,[width-140,680,140,720])
         # superimposing the text onto our button
-        screen.blit(ready , (width-140+40,685))
+        screen.blit(ready , (width-140+30,682))
 
 
-        ### player 1
+        ### player 2
 
         # create Mario button
-        if width/3-280 <= mouse[0] <= width/3-140 and \
+        if isinstance(character2, Mario):
+            pygame.draw.rect(screen,(64,64,64),
+            [width/3-280,height/2,140,40])            
+        elif width/3-280 <= mouse[0] <= width/3-140 and \
             height/2 <= mouse[1] <= height/2+40:
             pygame.draw.rect(screen,color_light,
             [width/3-280,height/2,140,40])
@@ -238,10 +236,13 @@ def character_menu():
         screen.blit(mario_label , (width/3+mario_width/3-280,height/2+5))
 
         # create Marth button
-        if width/3+140 <= mouse[0] <= width/3+280 and height/2 <= mouse[1] \
+        if isinstance(character2, Marth):
+            pygame.draw.rect(screen,(64,64,64),
+            [width/3+140,height/2,140,40])            
+        elif width/3+140 <= mouse[0] <= width/3+280 and height/2 <= mouse[1] \
             <= height/2+40:
             pygame.draw.rect(screen,color_light,
-                [width/3+140,height/2,140,40])
+            [width/3+140,height/2,140,40])
         else:
             pygame.draw.rect(screen,color_dark,
             [width/3+140,height/2,140,40])
@@ -249,20 +250,26 @@ def character_menu():
         screen.blit(marth_label , (width/3+140+30,height/2+5))
 
          # create Pikachu button
-        if width/3+560 <= mouse[0] <= width/3+600 and height/2 <= mouse[1] \
+        if isinstance(character2, Pikachu):
+            pygame.draw.rect(screen,(64,64,64),
+            [width/3+560,height/2,140,40])            
+        elif width/3+560 <= mouse[0] <= width/3+700 and height/2 <= mouse[1] \
             <= height/2+40:
             pygame.draw.rect(screen,color_light,
-                [width/3+560,height/2,140,40])
+            [width/3+560,height/2,140,40])
         else:
             pygame.draw.rect(screen,color_dark,
             [width/3+560,height/2,140,40])
         # superimposing the text onto our button
-        screen.blit(pikachu_label , (width/3+560+30,height/2+5))
+        screen.blit(pikachu_label , (width/3+560+15,height/2+5))
 
-        ### Player 2
+        ### Player 1
 
         # create Mario button
-        if width/3-280 <= mouse[0] <= width/3-140 and \
+        if isinstance(character1, Mario):
+            pygame.draw.rect(screen,(0,128,0),
+            [width/3-280,height/2-80,140,40])            
+        elif width/3-280 <= mouse[0] <= width/3-140 and \
             height/2-80 <= mouse[1] <= height/2-40:
             pygame.draw.rect(screen,color_light,
             [width/3-280,height/2-80,140,40])
@@ -273,7 +280,10 @@ def character_menu():
         screen.blit(mario_label , (width/3+mario_width/3-280,height/2-80+5))
 
         # create Marth button
-        if width/3+140 <= mouse[0] <= width/3+280 and height/2-80 <= mouse[1] \
+        if isinstance(character1, Marth):
+            pygame.draw.rect(screen,(0,128,0),
+            [width/3+140,height/2-80,140,40])
+        elif width/3+140 <= mouse[0] <= width/3+280 and height/2-80 <= mouse[1] \
             <= height/2-40:
             pygame.draw.rect(screen,color_light,
                 [width/3+140,height/2-80,140,40])
@@ -283,7 +293,10 @@ def character_menu():
         # superimposing the text onto our button
         screen.blit(marth_label , (width/3+140+30,height/2-80+5))
          # create Pikachu button
-        if width/3+560 <= mouse[0] <= width/3+600 and height/2-80 <= mouse[1] \
+        if isinstance(character1, Pikachu):
+            pygame.draw.rect(screen,(0,128,0),
+            [width/3+560,height/2-80,140,40])
+        elif width/3+560 <= mouse[0] <= width/3+700 and height/2-80 <= mouse[1] \
             <= height/2-40:
             pygame.draw.rect(screen,color_light,
                 [width/3+560,height/2-80,140,40])
@@ -291,9 +304,13 @@ def character_menu():
             pygame.draw.rect(screen,color_player2,
             [width/3+560,height/2-80,140,40])
         # superimposing the text onto our button
-        screen.blit(pikachu_label , (width/3+560+30,height/2-80+5))
+        screen.blit(pikachu_label , (width/3+560+15,height/2-80+5))
         # Display title
         screen.blit(title , (width/2-title_size/2.,height/5))
+
+        # add player labels
+        screen.blit(player2_label , (10,height/2+5))
+        screen.blit(player1_label , (10,height/2-80+5))
 
         # updates the frames of the game
         pygame.display.update()
