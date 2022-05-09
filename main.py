@@ -136,7 +136,9 @@ def wait_for_connection():
     while True:
         try:
             host = input("Host IP\n>")
-            character = input("Character\n>")
+            character = None
+            while character not in ['mario', 'marth', 'pikachu']:
+                character = input("Character\n>")
             launch_client(screen, host, character)
             break
         except ConnectionRefusedError:
