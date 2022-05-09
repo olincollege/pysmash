@@ -51,6 +51,8 @@ class KeyboardController(Controller):
 
         # Keys that must be repressed
         for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit()
             if event.type == pygame.KEYDOWN:
                 if event.key in [pygame.K_UP, pygame.K_SPACE]:
                     self.player.jump()

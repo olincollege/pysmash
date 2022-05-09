@@ -15,6 +15,8 @@ from characters.pikachu import Pikachu
 
 pygame.init()
 screen = pygame.display.set_mode([1240, 720])
+pygame.mixer.music.load('resources/theme.mp3')
+pygame.mixer.music.play(-1)
 # white color for text
 color = (255,255,255)
 # setting color shades for buttons
