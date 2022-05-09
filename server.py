@@ -8,14 +8,14 @@ import pickle
 import logging
 import pygame
 
-from game_multi import Game
+from game import Game
 from messages import make_server_message, implement_player_message, update_game
 from characters.mario import Mario
 from characters.marth import Marth
 from characters.pikachu import Pikachu
 
 # logging config
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 networks = {}
 NAME_DICT = {"mario": Mario, "marth": Marth, "pikachu": Pikachu}
@@ -94,7 +94,7 @@ async def main():
     Main event loop, create connection and run game
     """
     server = await asyncio.start_server(new_client, "0.0.0.0", 5555)
-    logging.info("listening on 0.0.0.0 on port 5555")
+    logging.info("Listening on all addresses on port 5555")
 
     while len(networks) < 2:
         await asyncio.sleep(2)
@@ -104,20 +104,19 @@ async def main():
     networks["p2"][1].write(player1.name.encode())
 
     game = Game(player1, player2)
-    logging.info("generated game")
 
     message = make_server_message(game)
     logging.debug(message)
     await broadcast(pickle.dumps(message))
-    logging.info("sent game")
+    logging.info("Generated and sent game")
 
     while True:
         game = await get_player_data(game)
         game.check_attack()
-        message = make_server_message(game)
-        await broadcast(pickle.dumps(message))
         if game.player1.stocks == 0 or game.player2.stocks == 0:
             return
+        message = make_server_message(game)
+        await broadcast(pickle.dumps(message))
         clock.tick(60)
 
 

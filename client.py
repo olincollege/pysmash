@@ -11,7 +11,7 @@ import pygame
 
 from view import WindowView
 from controller import KeyboardController
-from game_multi import Game
+from game import Game
 from characters.mario import Mario
 from characters.marth import Marth
 from characters.pikachu import Pikachu

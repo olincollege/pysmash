@@ -12,7 +12,7 @@ class Game:
     Main PySmash Game Class
     """
 
-    def __init__(self, screen, character1, character2):
+    def __init__(self, character1, character2, screen=None):
         """
         Create Game instance, define clock, player, controllers, viewers, and
         sprite groups
@@ -24,7 +24,8 @@ class Game:
         pygame.init()
         self.clock = pygame.time.Clock()
 
-        self.viewer = WindowView(self, screen)
+        if screen is not None:
+            self.viewer = WindowView(self, screen)
 
         self.player1 = character1
         self.player2 = character2
