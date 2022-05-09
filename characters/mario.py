@@ -23,16 +23,21 @@ class Mario(Player):
             self.spritesheet.image_at((17, 24, 25, 38), (47, 54, 153)), (50, 76)
         )
         left = pygame.transform.flip(right, flip_x=True, flip_y=False)
-        attack_r = pygame.transform.scale(
+        tilt_r = pygame.transform.scale(
             self.spritesheet.image_at((46, 1003, 44, 31), (47, 54, 153)), (88, 62)
         )
-        attack_l = pygame.transform.flip(attack_r, flip_x=True, flip_y=False)
-
+        tilt_l = pygame.transform.flip(tilt_r, flip_x=True, flip_y=False)
+        smash_l = pygame.transform.scale(
+            self.spritesheet.image_at((46, 1003, 44, 31), (47, 54, 153)), (88, 62)
+        )
+        smash_r = pygame.transform.flip(smash_l, flip_x=True, flip_y=False)
         self.images = {
             "left": left,
             "right": right,
-            "attack_r": attack_r,
-            "attack_l": attack_l,
+            "tilt_r": tilt_r,
+            "tilt_l": tilt_l,
+            "smash_r": smash_r,
+            "smash_l": smash_l,
         }
         super().__init__()
 
@@ -40,28 +45,32 @@ class Mario(Player):
         self.weight = 5
         self.speed = 3
         self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 50, 76)
-        self.attack_damage = 10
-        self.base_knockback = 3
-        self.knockback_ratio = 2 / 3
+        self.attacks = {'tilt': {'damage': 10, 'base': 5, 'ratio': 2/3},
+                        'smash': {'damage': 25, 'base': 10, 'ratio': 2/3}}
 
     def set_boxes(self):
         """
         Update Mario's hitboxes and hurtboxes
         """
-        if self.attacking > 0 and self.direction == "left":
+        if self.attack_cooldown > 0 and self.direction == "left":
             self.hurtbox = pygame.Rect(self.rect.x + 38, self.rect.y, 50, 76)
             self.hitbox = pygame.Rect(self.rect.x, self.rect.y + 15, 40, 35)
         else:
             self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 50, 76)
             self.hitbox = pygame.Rect(self.rect.x + 50, self.rect.y + 15, 40, 35)
 
-    def attack(self):
+    def tilt(self):
         """
         Perform a tilt attack
         """
-        self.attack_damage = 15
-        self.base_knockback = 5
-        self.knockback_ratio = 2 / 3
-        self.attacking = 45
+        self.attack = 'tilt'
+        self.attack_cooldown = 25
         if self.direction == "left":
             self.pos.x -= 30
+
+    def smash(self):
+        """
+        Perform a tilt attack
+        """
+        self.attack = 'smash'
+        self.attack_cooldown = 75

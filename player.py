@@ -7,7 +7,6 @@ import pygame
 vec = pygame.math.Vector2
 FRIC = -0.25
 
-
 class Player(abc.ABC, pygame.sprite.Sprite):
     """
     Abstract Class representing player in PySmash
@@ -34,9 +33,10 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         self.acc = vec(0, 0)
 
         self.jump_count = 0
-        self.attacking = 0
-        self.damage_cooldown = 0
         self.knockback_counter = 0
+        self.attack = 'tilt'
+        self.attack_cooldown = 0
+        self.damage_cooldown = 0
 
     def knockback(self, strength_y, direction, ratio):
         """
@@ -45,7 +45,6 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         Args:
             strength (int): amount of knockback to apply to the character
         """
-        print(strength_y)
         if direction == "right":
             strength_x = strength_y
         elif direction == "left":
@@ -55,10 +54,18 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         self.knockback_counter = self.health / 10
 
     @abc.abstractmethod
-    def attack(self):
+    def tilt(self):
         """
-        Abstract method for a character's attack. Defined on a per character
-        basis
+        Abstract method for a character's tilt attack. Defined on a per
+        character basis
+        """
+        pass
+
+    @abc.abstractmethod
+    def smash(self):
+        """
+        Abstract method for a character's smash attack. Defined on a per
+        character basis
         """
         pass
 
@@ -150,6 +157,9 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         if self.damage_cooldown > 0:
             self.damage_cooldown -= 1
 
+        if self.attack_cooldown > 0:
+            self.attack_cooldown -= 1
+
         self.rect.midbottom = self.pos
         self.set_boxes()
         self.character_image()
@@ -171,14 +181,21 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         """
         Set which character image to be displayed
         """
-        if self.attacking > 0:
-            self.attacking -= 1
-            if self.direction == "right":
-                self.image = self.images["attack_r"]
-            else:
-                self.image = self.images["attack_l"]
-            if self.attacking == 0 and self.direction == "left":
-                self.pos.x += 30
+        if self.attack_cooldown > 0:
+            if self.attack == 'tilt':
+                if self.direction == "left":
+                    self.image = self.images["tilt_r"]
+                else:
+                    self.image = self.images["tilt_l"]
+                if self.attack_cooldown == 0 and self.direction == "left":
+                    self.pos.x += 30
+            if self.attack == 'smash':
+                if self.direction == "left":
+                    self.image = self.images["smash_r"]
+                else:
+                    self.image = self.images["smash_l"]
+                if self.attack_cooldown == 0 and self.direction == "left":
+                    self.pos.x += 30
         else:
             self.hitbox = pygame.Rect(0, 0, 0, 0)
             if self.direction == "right":
