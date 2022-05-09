@@ -85,7 +85,9 @@ class KeyboardController2(Controller):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if self.player.attack_cooldown == 0:
-                    if event.key == pygame.K_1:
+                    if event.key == pygame.K_ESCAPE:
+                        pygame.quit()
+                    elif event.key == pygame.K_1:
                         self.player.tilt()
                     elif event.key == pygame.K_2:
                         self.player.smash()
