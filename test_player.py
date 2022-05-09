@@ -9,6 +9,11 @@ vec = pygame.math.Vector2
 
 @pytest.fixture
 def mario():
+    """
+    creates an instance of the game
+
+    returns: game is equal to the class Game
+    """
     screen = pygame.display.set_mode([1240, 720])
     mario = Mario()
     game = Game(screen, mario, Marth())
@@ -16,22 +21,40 @@ def mario():
 
 @pytest.fixture
 def pikachu():
+    """
+    creates an instance of the game
+
+    returns: A game which has pikachu and
+    Marth as the players
+    """
     screen = pygame.display.set_mode([1240, 720])
     pikachu = Pikachu()
     game = Game(screen, pikachu, Marth())
     return game
 
 def test_tilt_cooldown(mario):
+    """
+    Tests the attack cool down of mario
+    after a tilt attack.
+    """
     game = mario
     game.player1.tilt()
     assert game.player1.attack_cooldown == 25
     
 def test_smash_cooldown(mario):
+    """
+    tests the attack cool down of mario
+    after a smash attack.
+    """
     game = mario
     game.player1.smash()
     assert game.player1.attack_cooldown == 75
 
 def test_damage(pikachu):
+    """
+    Tests the health of Pikachu
+    after taking damage from Pikachu.
+    """
     game = pikachu
     game.player1.smash()
     game.player1.move()
@@ -40,6 +63,10 @@ def test_damage(pikachu):
     assert game.player2.health == 20
 
 def test_knockback(pikachu):
+    """
+    Tests the knockback of Pikachu
+    after a smash attack.
+    """
     game = pikachu
     game.player1.smash()
     game.player1.move()
@@ -48,12 +75,24 @@ def test_knockback(pikachu):
     assert game.player2.vel == vec(11.92, -11.92)
 
 def test_kill(mario):
+    """
+    Tests the stocks of a player
+    when that player leaves the
+    map.
+    """
     game = mario
     game.player1.pos = vec(-401, -401)
     game.player1.move()
     assert game.player1.stocks == 2
 
 def test_images(mario):
+    """
+    Tests the change in sprites when
+    a tilt attack occurs.
+
+    Tests the change in sprites when
+    a smash attack occurs.
+    """
     game = mario
     game.player1.left()
     game.player1.tilt()
@@ -66,6 +105,9 @@ def test_images(mario):
     assert game.player1.image == game.player1.images['smash_r']
 
 def test_direction(mario):
+    """
+    Tests the direction of mario.
+    """
     game = mario
     game.player1.left()
     assert game.player1.direction == 'left'
