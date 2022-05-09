@@ -1,5 +1,7 @@
+---
 title: "About Us"
 permalink: /about/
+---
 
 # About the Authors
 

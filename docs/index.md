@@ -38,8 +38,6 @@ for linux use the code,
 ## Link For the Github Repository
 https://github.com/olincollege/pysmash 
 
-
-
 ## External Resources
 <https://realpython.com/python-sockets/>
 
