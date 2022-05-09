@@ -46,6 +46,7 @@ class Mario(Player):
         self.name = "mario"
         self.weight = 5
         self.speed = 3
+        self.smash_cooldown=75
         self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 50, 76)
         self.attacks = {
             "tilt": {"damage": 10, "base": 5, "ratio": 2 / 3},

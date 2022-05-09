@@ -44,26 +44,34 @@ class Game:
         """
         if (
             self.player1.hitbox.colliderect(self.player2.hurtbox)
-            and self.player2.damage_cooldown == 0
-        ):
-            attack = self.player1.attacks[self.player1.attack]
-            self.player2.health += attack["damage"]
-            self.player2.knockback(
-                knockback_calcs(self.player1, self.player2),
-                self.player1.direction,
-                attack["ratio"],
+            and self.player2.damage_cooldown == 0 
+        ):  
+            if ((
+                self.player1.attack=="smash" and
+                self.player1.attack_cooldown<self.player1.smash_cooldown/2.
+                )==False):
+                attack = self.player1.attacks[self.player1.attack]
+                self.player2.health += attack["damage"]
+                self.player2.knockback(
+                    knockback_calcs(self.player1, self.player2),
+                    self.player1.direction,
+                    attack["ratio"],
             )
 
         if (
             self.player2.hitbox.colliderect(self.player1.hurtbox)
             and self.player1.damage_cooldown == 0
         ):
-            attack = self.player2.attacks[self.player2.attack]
-            self.player1.health += attack["damage"]
-            self.player1.knockback(
-                knockback_calcs(self.player2, self.player1),
-                self.player2.direction,
-                attack["ratio"],
+            if ((
+                self.player2.attack=="smash" and
+                self.player2.attack_cooldown<self.player2.smash_cooldown/2.
+                )==False):
+                attack = self.player2.attacks[self.player2.attack]
+                self.player1.health += attack["damage"]
+                self.player1.knockback(
+                    knockback_calcs(self.player2, self.player1),
+                    self.player2.direction,
+                    attack["ratio"],
             )
 
     def gameloop(self):

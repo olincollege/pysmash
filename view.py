@@ -68,14 +68,16 @@ class WindowView(CharaterView):
         self.game.all_sprites.draw(self.screen)
         color = (255, 255, 255)
         small_font = pygame.font.SysFont("Corbel", 35)
-        p1_line1 = small_font.render("Player 1:", True, color)
+        p1_line1 = small_font.render(f"Player 1 " + \
+        f"{self._game.player1.name.capitalize()}:", True, color)
         p1_line2 = small_font.render(
             f"Damage: {self._game.player1.health} "
             + f"Stock: {self._game.player1.stocks}",
             True,
             color,
         )
-        p2_line1 = small_font.render("Player 2:", True, color)
+        p2_line1 = small_font.render(f"Player 2 " + \
+        f"{self._game.player2.name.capitalize()}:", True, color)
         p2_line2 = small_font.render(
             f"Damage: {self._game.player2.health} "
             + f"Stock: {self._game.player2.stocks}",

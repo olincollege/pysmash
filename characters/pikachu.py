@@ -48,6 +48,7 @@ class Pikachu(Player):
         self.name = "pikachu"
         self.weight = 3
         self.speed = 4.5
+        self.smash_cooldown=60
         self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 70, 56)
         self.attacks = {
             "tilt": {"damage": 5, "base": 2, "ratio": 1 / 2},

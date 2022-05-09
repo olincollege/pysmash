@@ -46,9 +46,7 @@ class Marth(Player):
         self.name = "marth"
         self.weight = 4
         self.speed = 4
-        self.attack_damage = 7
-        self.base_knockback = 3
-        self.knockback_ratio = 1 / 2
+        self.smash_cooldown=75
         self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 42, 70)
         self.attacks = {
             "tilt": {"damage": 7, "base": 3, "ratio": 1 / 2},
