@@ -2,9 +2,7 @@
 This file creates the starting screens and menus for our game.
 """
 
-# Base menu from https://www.geeksforgeeks.org/creating-start-menu-in-pygame/
-# Highly edited to fit our use case
-
+# adapted from https://www.geeksforgeeks.org/creating-start-menu-in-pygame/
 
 import pygame
 from game import launch_local
