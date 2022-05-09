@@ -1,14 +1,16 @@
-# PySmash
-A Python clone of Super Smash Bros playable over LAN
+---
+title: "Documentation"
+permalink: /docs/
+---
 
 ## Installation
 
-To install, first clone this repo and ensure you have all necessary dependencies by running
+To install, first clone found [here](github.com/olincollege/pysmash) and ensure you have all necessary dependencies by running
 ```
 pip install -r requirements.txt
 ```
 
-## Quick Start
+## Quick Start Guide
 
 ### Local Multiplayer
 
@@ -33,7 +35,3 @@ Use the arrow keys to move, the / key for a tilt attack, and the . (period) key 
 Use WASD to move, the 1 key for a tilt attack, and the 2 key for a smash attack
 
 Smash attacks are more powerful than tilt attacks, but they have a longer cooldown and leave you vulnerable. Choose wisely!
-
-For more info, see our website [here](olincollege.github.io/pysmash)
-
-
