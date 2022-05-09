@@ -1,2 +1,5 @@
 title: PySmash
 remote_theme: hydecorp/hydejack
+
+plugins:
+  - jekyll-include-cache
