@@ -50,7 +50,12 @@ His personal goals for this project were to apply the learnings of classes and M
 Amit Kumar
 
 Jacob Prisament
+pronouns: He/Him
+major: Mechanical Engineering
 
+Jacob loves playing double bass, spinning fire, board games, and reading.
+
+His personal goals for this project were to work on good game architecture and to develop a game that was smooth and enjoyable to play. 
 
 ## External Resources
 https://realpython.com/python-sockets/ 
