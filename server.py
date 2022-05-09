@@ -37,10 +37,12 @@ async def new_client(reader, writer):
     """
     global player1, player2
     logging.info("New Connection")
+    # is this connection player 1 or 2?
     if not networks:
         logging.info("Player 1 Joined")
         networks["p1"] = (reader, writer)
         writer.write(b"player1")
+        # Get player data and create object
         p1_raw = await reader.read(BUFFER)
         p1_data = pickle.loads(p1_raw)
         player1 = NAME_DICT[p1_data[0]]()
@@ -49,6 +51,7 @@ async def new_client(reader, writer):
         logging.info("Player 2 Joined")
         networks["p2"] = (reader, writer)
         writer.write(b"player2")
+        # Get player data and create object
         p2_raw = await reader.read(BUFFER)
         p2_data = pickle.loads(p2_raw)
         player2 = NAME_DICT[p2_data[0]]()
@@ -96,10 +99,12 @@ async def main():
     server = await asyncio.start_server(new_client, "0.0.0.0", 5555)
     logging.info("Listening on all addresses on port 5555")
 
+    # Wait until both players have joined
     while len(networks) < 2:
         await asyncio.sleep(2)
     await asyncio.sleep(2)
 
+    # tell clients who the other client is
     networks["p1"][1].write(player2.name.encode())
     networks["p2"][1].write(player1.name.encode())
 
@@ -110,6 +115,7 @@ async def main():
     await broadcast(pickle.dumps(message))
     logging.info("Generated and sent game")
 
+    # main loop
     while True:
         game = await get_player_data(game)
         game.check_attack()

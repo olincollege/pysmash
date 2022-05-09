@@ -62,16 +62,19 @@ async def main(screen, host, character):
     reader, writer = await asyncio.open_connection(host, 5555)
     print("connection made")
 
+    # are we player 1 or 2?
     player_num = await reader.read(100)
     player_num = player_num.decode()
     print(player_num)
 
+    # what character is the other client?
     player = NAME_DICT[character]()
     print(player.name)
     await send_player_data(writer, player)
     other = await reader.read(100)
     print(other.decode())
 
+    # Create local game instance
     if player_num == "player1":
         game = Game(player, NAME_DICT[other.decode()]())
         player = game.player1
@@ -82,10 +85,10 @@ async def main(screen, host, character):
         player.direction = "left"
 
     controller = KeyboardController(player)
-
     await get_player_data(reader, game)
     viewer = WindowView(game, screen)
 
+    # main loop
     while True:
         controller.move()
         await send_player_data(writer, player)
