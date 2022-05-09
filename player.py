@@ -18,7 +18,6 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         image (pygame.Image): Current image of player
         rect (pygame.rect): Current rect of player
         stocks (int): Stocks remaining
-        hitbox (pygame.Rect): box that does damage
         pos (pygame.math.Vector2): XY player position
         vel (pygame.math.Vector2): XY player velocity
         acc (pygame.math.Vector2): XY player acceleration
@@ -27,6 +26,19 @@ class Player(abc.ABC, pygame.sprite.Sprite):
         attack (str): last attack that was performed
         attack_cooldown (int): frames remaining until player can attack
         damage_cooldown (int): frames remaining until player can take damage
+
+    The following attributes are character specific and set in respective
+    subclasses:
+        spritesheet (Spritesheet): Spritesheet to take player images from
+        images (dict): dictionary of all of the various player images
+        name (str): name of character
+        weight (int): weight of character (affects knockback taken)
+        speed (int): speed of character
+        smash_cooldown (int): cooldown period after performing a smash attack
+        hitbox (pygame.Rect): box that can do damage
+        hurtbox (pygame.Rect): box on the player that can take damage
+        attacks (dict): Dictionary of a player's attacks and their respective
+            statistics
     """
 
     def __init__(self):
