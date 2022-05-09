@@ -1,12 +1,7 @@
 """
 Main PySmash Game Class
 """
-from dataclasses import asdict
 import pygame
-
-
-# pylint: disable=no-member
-
 from view import WindowView
 from controller import KeyboardController, KeyboardController2
 from characters.pikachu import Pikachu
@@ -19,8 +14,6 @@ class Game:
     """
     Main PySmash Game Class
     """
-
-    # pylint: disable=too-many-instance-attributes
 
     def __init__(self, screen):
         """
@@ -74,7 +67,7 @@ class Game:
                 self.player2.direction,
                 attack['ratio']
             )
-            
+
     def gameloop(self):
         """
         Main game loop
@@ -86,7 +79,7 @@ class Game:
             self.p2controller.move()
             self.check_attack()
             self.viewer.draw()
-            self.clock.tick(60)                
+            self.clock.tick(60)
 
 def knockback_calcs(attacker, victim):
     """
@@ -105,7 +98,11 @@ def knockback_calcs(attacker, victim):
     return knockback
 
 def launch_local(screen):
+    """
+    Launch local multiplayer game
+
+    Args:
+        screen (pygame.display): screen to play game on
+    """
     game = Game(screen)
     game.gameloop()
-
-
