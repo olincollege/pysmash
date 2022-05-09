@@ -48,6 +48,12 @@ His personal goals for this project were to apply the learnings of classes and M
 
 
 ### Amit Kumar
+Pronouns: He/Him
+Major: Electrical and Computer Engineering
+
+Amit enjoys Ultimate Frisbee, basketball, board games, and reading.
+
+His personal goals for this project were to take on an ambitious project using areas of programming that were new to him - in this case, that was using socket programming to create a multiplayer game.
 
 
 ### Jacob Prisament
