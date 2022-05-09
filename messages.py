@@ -75,8 +75,10 @@ def make_server_message(game):
     Returns:
         message (List): outgoing server message
     """
-    return [make_player_message(game.player1),
-            make_player_message(game.player2)]
+    return [
+        make_player_message(game.player1),
+        make_player_message(game.player2),
+    ]
 
 
 def update_game(game, p1_data, p2_data):

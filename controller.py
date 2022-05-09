@@ -4,10 +4,12 @@ Contains Controller Classes for PySmash
 from abc import ABC, abstractmethod
 import pygame
 
+
 class Controller(ABC):
     """
     Abstract class to define a character controller
     """
+
     def __init__(self, player):
         """
         Creates a private instance attribute of a Smash player
@@ -35,6 +37,7 @@ class KeyboardController(Controller):
     """
     Controller that allows keyboard control of character
     """
+
     def move(self):
         """
         Takes keyboard input and moves Player object accordingly
@@ -51,7 +54,7 @@ class KeyboardController(Controller):
 
         # Keys that must be repressed
         for event in pygame.event.get():
-            if event.type==pygame.QUIT:
+            if event.type == pygame.QUIT:
                 pygame.quit()
             if event.type == pygame.KEYDOWN:
                 if event.key in [pygame.K_UP, pygame.K_SPACE]:
@@ -66,10 +69,12 @@ class KeyboardController(Controller):
                     pygame.event.post(event)
         self.player.move()
 
+
 class KeyboardController2(Controller):
     """
     Controller that allows keyboard control of character
     """
+
     def move(self):
         """
         Takes keyboard input and moves Player object accordingly
