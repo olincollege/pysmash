@@ -55,21 +55,24 @@ class Game:
             self.player1.hitbox.colliderect(self.player2.hurtbox)
             and self.player2.damage_cooldown == 0
         ):
-            self.player2.health += self.player1.attack_damage
+            attack = self.player1.attacks[self.player1.attack]
+            self.player2.health += attack['damage']
             self.player2.knockback(
                 knockback_calcs(self.player1, self.player2),
                 self.player1.direction,
-                self.player1.knockback_ratio,
+                attack['ratio']
             )
+
         if (
             self.player2.hitbox.colliderect(self.player1.hurtbox)
             and self.player1.damage_cooldown == 0
         ):
-            self.player1.health += self.player2.attack_damage
+            attack = self.player2.attacks[self.player2.attack]
+            self.player1.health += attack['damage']
             self.player1.knockback(
                 knockback_calcs(self.player2, self.player1),
                 self.player2.direction,
-                self.player2.knockback_ratio,
+                attack['ratio']
             )
             
     def gameloop(self):
@@ -93,10 +96,10 @@ def knockback_calcs(attacker, victim):
     # formula
     # pylint: disable=invalid-name
     h = victim.health
-    d = attacker.attack_damage
+    d = attacker.attacks[attacker.attack]['damage']
     w = victim.weight
     s = 0.04
-    b = attacker.base_knockback
+    b = attacker.attacks[attacker.attack]['base']
     knockback = ((((h / 10 + h * d / 20) * w) + 10) * s) + b
     print(knockback)
     return knockback

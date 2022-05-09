@@ -42,7 +42,7 @@ class KeyboardController(Controller):
         self.player.gravity()
 
         # Support for keeping a key held down
-        if self.player.attacking == 0:
+        if self.player.attack_cooldown == 0:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT]:
                 self.player.left()
@@ -52,12 +52,14 @@ class KeyboardController(Controller):
         # Keys that must be repressed
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_DOWN:
-                    self.player.crouch()
-                elif event.key in [pygame.K_UP, pygame.K_SPACE]:
+                if event.key in [pygame.K_UP, pygame.K_SPACE]:
                     self.player.jump()
                 elif event.key == pygame.K_SLASH:
-                    self.player.attack()
+                    if self.player.attack_cooldown == 0:
+                        self.player.tilt()
+                elif event.key == pygame.K_PERIOD:
+                    if self.player.attack_cooldown == 0:
+                        self.player.smash()
                 else:
                     pygame.event.post(event)
         self.player.move()
@@ -72,7 +74,7 @@ class KeyboardController2(Controller):
         """
         self.player.gravity()
         # Support for keeping a key held down
-        if self.player.attacking == 0:
+        if self.player.attack_cooldown == 0:
             keys = pygame.key.get_pressed()
             if keys[pygame.K_a]:
                 self.player.left()
@@ -82,8 +84,11 @@ class KeyboardController2(Controller):
         # Keys that must be repressed
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_1:
-                    self.player.attack()
-                elif event.key == pygame.K_w:
+                if self.player.attack_cooldown == 0:
+                    if event.key == pygame.K_1:
+                        self.player.tilt()
+                    elif event.key == pygame.K_2:
+                        self.player.smash()
+                if event.key == pygame.K_w:
                     self.player.jump()
         self.player.move()
