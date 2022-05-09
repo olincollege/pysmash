@@ -40,8 +40,3 @@ Use WASD to move, the 1 key for a tilt attack, and the 2 key for a smash attack
 Smash attacks are more powerful than tilt attacks, but they have a longer cooldown and leave you vulnerable. Choose wisely!
 
 ## Github Repo [here](github.com/olincollege/pysmash)
-
-## External Resources
-<https://realpython.com/python-sockets/>
-
-<https://docs.python.org/3/library/asyncio.html> 
