@@ -11,6 +11,22 @@ FRIC = -0.25
 class Player(abc.ABC, pygame.sprite.Sprite):
     """
     Abstract Class representing player in PySmash
+
+    Attributes:
+        direction (str): direction player is facing
+        health (int): Current health of player
+        image (pygame.Image): Current image of player
+        rect (pygame.rect): Current rect of player
+        stocks (int): Stocks remaining
+        hitbox (pygame.Rect): box that does damage
+        pos (pygame.math.Vector2): XY player position
+        vel (pygame.math.Vector2): XY player velocity
+        acc (pygame.math.Vector2): XY player acceleration
+        jump_count (int): number of jumps remaining
+        knockback_counter (int): frames remaining in knockback period
+        attack (str): last attack that was performed
+        attack_cooldown (int): frames remaining until player can attack
+        damage_cooldown (int): frames remaining until player can take damage
     """
 
     def __init__(self):
