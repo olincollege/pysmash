@@ -98,6 +98,8 @@ class Pikachu(Player):
         Changes jump count to 3
         """
         self.acc = vec(0, 0.5)
+        if 185<self.pos.x<(185+861) and 405<(self.pos.y-70)<430:
+            self.vel.y=0
         if self.knockback_counter <= 0:
             hits = pygame.sprite.spritecollide(self, self.platforms, False)
             if hits:

@@ -166,9 +166,9 @@ class Player(abc.ABC, pygame.sprite.Sprite):
             if self.attack_cooldown == 0 and self.direction == 'left':
                 self.pos.x += 30
 
+        self.character_image()
         self.set_boxes()
         self.rect.midbottom = self.pos
-        self.character_image()
 
         self.is_dead()
 
