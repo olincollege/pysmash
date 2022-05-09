@@ -6,5 +6,3 @@ This game is a clone of the popular Super Smash Bros. Our goal for this project 
 # Full Project Presentation
 [![Project Presentation](https://img.youtube.com/vi/1fjQp3s1X5s/0.jpg)](https://youtu.be/1fjQp3s1X5s)
 
-
-## Github Repo [here](github.com/olincollege/pysmash)

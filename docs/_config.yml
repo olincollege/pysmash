@@ -8,5 +8,10 @@ menu:
     url: /
   - title: Documentation
     url: /docs/
+
+author:
+  social:
+    github: olincollege/pysmash
+
 plugins:
   - jekyll-include-cache
