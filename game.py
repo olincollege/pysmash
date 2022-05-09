@@ -111,5 +111,5 @@ def launch_local(screen, player1, player2):
     Args:
         screen (pygame.display): screen to play game on
     """
-    game = Game(screen, player1, player2)
+    game = Game(player1, player2, screen)
     return game.gameloop()
