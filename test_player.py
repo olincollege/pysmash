@@ -12,9 +12,10 @@ vec = pygame.math.Vector2
 @pytest.fixture
 def mario():
     """
-    creates an instance of the game
+    Create an instance of the game to test with
 
-    returns: game is equal to the class Game
+    Returns: 
+        game (Game): game with Mario as player 1
     """
     screen = pygame.display.set_mode([1240, 720])
     mario = Mario()
@@ -23,6 +24,12 @@ def mario():
 
 @pytest.fixture
 def marth():
+    """
+    Create an instance of the game to test with
+
+    Returns: 
+        game (Game): game with Marth as player 1
+    """
     screen = pygame.display.set_mode([1240, 720])
     marth = Marth()
     game = Game(screen, marth, Marth())
@@ -31,10 +38,10 @@ def marth():
 @pytest.fixture
 def pikachu():
     """
-    creates an instance of the game
+    Create an instance of the game to test with
 
-    returns: A game which has pikachu and
-    Marth as the players
+    Returns: 
+        game (Game): game with Pikachu as player 1
     """
     screen = pygame.display.set_mode([1240, 720])
     pikachu = Pikachu()
@@ -44,7 +51,7 @@ def pikachu():
 
 def test_tilt_cooldown(mario):
     """
-    Tests the attack cool down of mario
+    Test the attack cool down of mario
     after a tilt attack.
     """
     game = mario
@@ -54,7 +61,7 @@ def test_tilt_cooldown(mario):
 
 def test_smash_cooldown(mario):
     """
-    tests the attack cool down of mario
+    Test the attack cool down of mario
     after a smash attack.
     """
     game = mario
@@ -64,8 +71,7 @@ def test_smash_cooldown(mario):
 
 def test_damage(pikachu):
     """
-    Tests the health of Pikachu
-    after taking damage from Pikachu.
+    Test the amount of damage done after Pikachu's smash attack
     """
     game = pikachu
     game.player1.smash()
@@ -77,8 +83,7 @@ def test_damage(pikachu):
 
 def test_knockback(pikachu):
     """
-    Tests the knockback of Pikachu
-    after a smash attack.
+    Test the knockback of Pikachu on Marth after a smash attack.
     """
     game = pikachu
     game.player1.smash()
@@ -90,9 +95,7 @@ def test_knockback(pikachu):
 
 def test_kill(mario):
     """
-    Tests the stocks of a player
-    when that player leaves the
-    map.
+    Test that Mario dies when he leaves the map
     """
     game = mario
     game.player1.pos = vec(-401, -401)
@@ -102,11 +105,8 @@ def test_kill(mario):
 
 def test_images(mario):
     """
-    Tests the change in sprites when
-    a tilt attack occurs.
-
-    Tests the change in sprites when
-    a smash attack occurs.
+    Test the change in sprites when tilt and smash attacks occur in different
+    directions
     """
     game = mario
     game.player1.left()
@@ -122,7 +122,7 @@ def test_images(mario):
 
 def test_direction(mario):
     """
-    Tests the direction of mario.
+    Test that the direction of Mario changes when he moves right or left
     """
     game = mario
     game.player1.left()
@@ -132,18 +132,29 @@ def test_direction(mario):
     assert game.player1.direction == "right"
 
 def test_marth_tilt_cooldown(marth):
+    """
+    Test the attack cool down of marth
+    after a tilt attack.
+    """
     game = marth
     game.player1.tilt()
     assert game.player1.attack_cooldown == 15
 
 
 def test_marth_smash_cooldown(marth):
+    """
+    Test the attack cool down of marth
+    after a smash attack.
+    """
     game = marth
     game.player1.smash()
     assert game.player1.attack_cooldown == 75
 
 
 def test_marth_kill(marth):
+    """
+    Test that Marth dies when he leaves the map
+    """
     game = marth
     game.player1.pos = vec(-401, -401)
     game.player1.move()
@@ -151,6 +162,10 @@ def test_marth_kill(marth):
 
 
 def test_marth_images(marth):
+    """
+    Test Marth's change in sprites when tilt and smash attacks occur in
+    different directions
+    """
     game = marth
     game.player1.left()
     game.player1.tilt()
@@ -164,6 +179,9 @@ def test_marth_images(marth):
 
 
 def test_marth_direction(marth):
+    """
+    Test that the direction of Marth changes when he moves right or left
+    """
     game = marth
     game.player1.left()
     assert game.player1.direction == "left"
