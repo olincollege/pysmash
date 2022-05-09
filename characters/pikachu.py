@@ -1,7 +1,6 @@
 """
 Class for Pikachu
 """
-# pylint: disable=import-error
 import pygame
 from spritesheet import SpriteSheet
 from player import Player
@@ -13,10 +12,6 @@ class Pikachu(Player):
     """
     Class for Pikachu character
     """
-
-    # pylint: disable=too-many-instance-attributes
-    # pylint: disable=attribute-defined-outside-init
-    # pylint: disable=no-member
 
     def __init__(self):
         """

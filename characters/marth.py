@@ -1,7 +1,6 @@
 """
 Class for Marth
 """
-# pylint: disable=import-error
 import pygame
 from spritesheet import SpriteSheet
 from player import Player
@@ -11,10 +10,6 @@ class Marth(Player):
     """
     Class for Marth character
     """
-
-    # pylint: disable=too-many-instance-attributes
-    # pylint: disable=attribute-defined-outside-init
-    # pylint: disable=no-member
 
     def __init__(self):
         """

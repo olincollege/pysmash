@@ -12,8 +12,6 @@ class Game:
     Main PySmash Game Class
     """
 
-    # pylint: disable=too-many-instance-attributes
-
     def __init__(self, screen, character1, character2):
         """
         Create Game instance, define clock, player, controllers, viewers, and
