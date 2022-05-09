@@ -36,8 +36,8 @@ class Game:
 
         self.viewer = WindowView(self, screen)
 
-        self.player1 = Mario()
-        self.player2 = Mario()
+        self.player1 = Pikachu()
+        self.player2 = Marth()
         self.p1controller = KeyboardController(self.player1)
         self.p2controller = KeyboardController2(self.player2)
         self.all_sprites = pygame.sprite.Group(self.player1, self.player2)

@@ -90,7 +90,9 @@ class Marth(Player):
                     self.rect = self.image.get_rect()    
         else:
             self.hurtbox = pygame.Rect(self.rect.x, self.rect.y, 42, 70)
+            self.hitbox = pygame.Rect(0,0,0,0)
             self.rect = self.image.get_rect()
+
     def tilt(self):
         """
         Perform a tilt attack
@@ -106,4 +108,6 @@ class Marth(Player):
         """
         self.attack = 'smash'
         self.attack_cooldown = 75
+        if self.direction == "left":
+            self.pos.x -= 30
 

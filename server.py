@@ -12,12 +12,13 @@ from game_multi import Game
 from messages import make_server_message, implement_player_message, update_game
 from characters.mario import Mario
 from characters.marth import Marth
+from characters.pikachu import Pikachu
 
 # logging config
 logging.basicConfig(level=logging.DEBUG)
 
 networks = {}
-NAME_DICT = {"mario": Mario, "marth": Marth}
+NAME_DICT = {'mario': Mario, 'marth': Marth, 'pikachu': Pikachu}
 BUFFER = 1024
 player1 = player2 = None
 clock = pygame.time.Clock()
