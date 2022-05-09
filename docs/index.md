@@ -15,7 +15,9 @@ Playable as a local multiplayer game on one computer or over a local network, ou
 
 ## External Resources
 Menu screens adapted from [https://www.geeksforgeeks.org/creating-start-menu-in-pygame/](https://www.geeksforgeeks.org/creating-start-menu-in-pygame/)
+
 Spritesheet Class from [www.scriptefun.com/transcript-2-using-sprite-sheets-and-drawing-the-background](www.scriptefun.com/transcript-2-using-sprite-sheets-and-drawing-the-background)
+
 Sprites from [www.scriptefun.com/transcript-2-using-sprite-sheets-and-drawing-the-background](https://www.spriters-resource.com/custom_edited/supersmashbroscustoms/)
 
  
