@@ -10,6 +10,19 @@ from stages.final_destination import FinalDestination
 class Game:
     """
     Main PySmash Game Class
+
+    Class atributes: 
+        clock: a pygame clock which tracks time used for refresh rate
+        viewer: a Window view object
+        player1: a player object for player number 1
+        player2: a player object for player number 2
+        p1controller: a Keyboard Controller for player 1
+        p2controller: a Keyboard Controller for player 2
+        all_sprites: a sprite group to keep track of collisions
+        stage: the map chosen for the game with specific platforms
+        these platforms are then set as atributes of each player for
+        their internal logic.
+
     """
 
     def __init__(self, character1, character2, screen=None):
