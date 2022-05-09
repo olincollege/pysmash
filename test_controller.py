@@ -2,7 +2,8 @@ import pytest
 import pygame as pg
 from controller import KeyboardController
 from controller import KeyboardController2
-test_player = Player()
+from characters.mario import Mario
+test_player = Mario()
 
 # keystrokes1_detail = [
 #     (pg.event.Event(pg.KEYDOWN, key=pg.K_LEFT), ),
