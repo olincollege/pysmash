@@ -5,7 +5,6 @@ CLI Args:
     Host IP Address
     Character Name
 """
-import sys
 import asyncio
 import pickle
 import pygame
@@ -96,4 +95,12 @@ async def main(screen, host, character):
         clock.tick(60)
 
 def launch_client(screen, host, character):
+    """
+    Launch client for online multiplayer PySmash game
+
+    Args:
+        screen (pygame.display): display to run game on
+        host (str): IP address of game host
+        character (str): character to play as
+    """
     asyncio.run(main(screen, host, character))
