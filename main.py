@@ -44,7 +44,7 @@ def start_menu():
     online_width, _ = small_font.size("Online")
 
     title = title_font.render('PySmash' , True , (30,144,255))
-    title_size,title_size_height = title_font.size("PySmash")
+    title_size,_ = title_font.size("PySmash")
 
     while True:
         for ev in pygame.event.get():
@@ -60,8 +60,7 @@ def start_menu():
                 elif width/2-280 <= mouse[0] <= width/2 and \
                     height/2 <= mouse[1] <= height/2+40:
                     print('local pressed')
-                    launch_local(screen,*character_menu())
-                    return
+                    return launch_local(screen,*character_menu())
                 elif width/2+140 <= mouse[0] <= width/2+280 and \
                     height/2 <= mouse[1] <= height/2+40:
                     print('online pressed')
@@ -139,7 +138,10 @@ def wait_for_connection():
 def character_menu():
     """
     Creates a character menu and starts or quits the game
-    Args: game class
+
+    Returns:
+        character1: A player class representing the character for player 1
+        character2: A player class representing the character for player 2
     """
     character1 = Mario()
     character2 = Mario()
@@ -153,7 +155,7 @@ def character_menu():
     player2_label = small_font.render('Player 2:' , True , color)
 
     title = title_font.render('Characters' , True , (30,144,255))
-    title_size,title_size_height = title_font.size("Characters")
+    title_size,_ = title_font.size("Characters")
 
     while True:
         for ev in pygame.event.get():
@@ -171,28 +173,22 @@ def character_menu():
                 # Player 2
                 elif width/3-280 <= mouse[0] <= width/3-140 and \
                     height/2 <= mouse[1] <= height/2+40:
-                    print('Mario pressed')
                     character2 = Mario()
                 elif width/3+140 <= mouse[0] <= width/3+280 and \
                     height/2 <= mouse[1] <= height/2+40:
-                    print('Marth pressed')
                     character2 = Marth()
                 elif width/3+560 <= mouse[0] <= width/3+700 and \
                     height/2 <= mouse[1] <= height/2+40:
-                    print('Pikachu pressed')
                     character2 = Pikachu()
                 # Player 1
                 elif width/3-280 <= mouse[0] <= width/3-140 and \
                     height/2-80 <= mouse[1] <= height/2-40:
-                    print('Mario pressed')
                     character1 = Mario()
                 elif width/3+140 <= mouse[0] <= width/3+280 and \
                     height/2-80 <= mouse[1] <= height/2-40:
-                    print('Marth pressed')
                     character1 = Marth()
                 elif width/3+560 <= mouse[0] <= width/3+700 and \
                     height/2-80 <= mouse[1] <= height/2-40:
-                    print('Pikachu pressed')
                     character1 = Pikachu()
                 elif width-140 <= mouse[0] <= width and 680 <= mouse[1] <= 720:
                     return character1,character2
@@ -317,13 +313,53 @@ def character_menu():
         # updates the frames of the game
         pygame.display.update()
 
+def winner_screen(player):
+    winner= title_font.render(f"The Winner is {player}",True,(30,144,255))
+    winner_size,_ = title_font.size("The Winner is Player 1")
+    quit = small_font.render('Quit' , True , color)
+    continue_text = small_font.render('Continue' , True , color)
+    while True:
+        for ev in pygame.event.get():
 
+            if ev.type == pygame.QUIT:
+                pygame.quit()
+
+            #checks if a mouse is clicked
+            if ev.type == pygame.MOUSEBUTTONDOWN:
+
+                #if the mouse is clicked on the
+                # button the game is terminated
+                if width-140 <= mouse[0] <= width and 0 <= mouse[1] <= 40:
+                    pygame.quit()
+                # Player 2
+                elif width/2-100 <= mouse[0] <= width/2+100 and \
+                    height/2 <= mouse[1] <= height/2+40:
+                    return
+        mouse = pygame.mouse.get_pos()
+        # create quit button
+        if width-140 <= mouse[0] <= width and 0 <= mouse[1] <= 40:
+            pygame.draw.rect(screen,color_light,[width-140,0,140,40])
+        else:
+            pygame.draw.rect(screen,color_dark,[width-140,0,140,40])
+        # create continue button
+        if width/2-100 <= mouse[0] <= width/2+100 and \
+        height/2 <= mouse[1] <= height/2 +40:
+            pygame.draw.rect(screen,color_light,[width/2-100,height/2,200,40])
+        else:
+            pygame.draw.rect(screen,color_dark,[width/2-100,height/2,200,40])
+        # superimposing the text onto our button
+        screen.blit(quit , (width-140+40,5))
+        screen.blit(continue_text , (width/2-60,height/2+5))
+        screen.blit(winner , (width/2-winner_size/2.,height/4))
+        # updates the frames of the game
+        pygame.display.update()
+        
 def main():
     """
     main method of the program.
     """
     while True:
-        start_menu()
+        winner_screen(start_menu())
 
 if __name__ == '__main__':
     main()

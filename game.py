@@ -75,8 +75,11 @@ class Game:
         Main game loop
         """
         while True:
-            if self.player1.stocks == 0 or self.player2.stocks == 0:
-                return
+            if self.player1.stocks == 0:
+                return "Player 2"
+                
+            elif self.player2.stocks == 0:
+                return "Player 1"
             self.p1controller.move()
             self.p2controller.move()
             self.check_attack()
@@ -110,4 +113,4 @@ def launch_local(screen, player1, player2):
         screen (pygame.display): screen to play game on
     """
     game = Game(screen, player1, player2)
-    game.gameloop()
+    return game.gameloop()
