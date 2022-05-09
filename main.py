@@ -175,7 +175,11 @@ def character_menu():
 
             if ev.type == pygame.QUIT:
                 pygame.quit()
-
+            
+            # stores the (x,y) coordinates into
+            # the variable as a tuple
+            mouse = pygame.mouse.get_pos()
+            
             # checks if a mouse is clicked
             if ev.type == pygame.MOUSEBUTTONDOWN:
 
@@ -221,10 +225,6 @@ def character_menu():
                     return character1, character2
         # fills the screen with a color
         screen.fill((25, 25, 112))
-
-        # stores the (x,y) coordinates into
-        # the variable as a tuple
-        mouse = pygame.mouse.get_pos()
 
         # create quit button
         if width - 140 <= mouse[0] <= width and 0 <= mouse[1] <= 40:

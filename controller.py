@@ -45,7 +45,8 @@ class KeyboardController(Controller):
         self.player.gravity()
 
         # Support for keeping a key held down
-        if self.player.attack_cooldown == 0:
+        if self.player.attack_cooldown == 0 or \
+            self.player.attack == "tilt":
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT]:
                 self.player.left()
@@ -81,7 +82,8 @@ class KeyboardController2(Controller):
         """
         self.player.gravity()
         # Support for keeping a key held down
-        if self.player.attack_cooldown == 0:
+        if self.player.attack_cooldown == 0 or \
+            self.player.attack == "tilt":
             keys = pygame.key.get_pressed()
             if keys[pygame.K_a]:
                 self.player.left()
